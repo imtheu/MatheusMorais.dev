@@ -1,0 +1,38 @@
+{
+	"extends": "stylelint-config-recommended",
+	"defaultSeverity": "error",
+	"rules": {
+		"selector-class-pattern": "^[-]*([a-z][a-zA-Z0-9]*)+([-][a-z0-9][a-zA-Z0-9]*)*$",
+		"selector-type-no-unknown": [
+			true,
+			{ "ignoreTypes": ["amp-img", "twitter-widget"] }
+		],
+		"selector-no-vendor-prefix": true,
+		"selector-no-qualifying-type": true,
+		"selector-max-id": 0,
+		"selector-max-universal": 0,
+		"no-descending-specificity": null,
+		"declaration-property-unit-disallowed-list": {
+			"/^transition/": ["ms"],
+			"line-height": ["%", "em"]
+		},
+		"declaration-property-value-disallowed-list": {
+			"border": ["none"]
+		},
+		"declaration-no-important": true,
+		"property-no-unknown": [
+			true,
+			{ "ignoreProperties": ["tap-highlight-color", "font-smoothing"] }
+		],
+		"property-no-vendor-prefix": true,
+		"shorthand-property-no-redundant-values": true,
+		"at-rule-no-unknown": null,
+
+		"value-no-vendor-prefix": true,
+		"color-named": "never",
+		"color-no-invalid-hex": true,
+		"color-hex-length": "short",
+		"function-url-quotes": "always",
+		"length-zero-no-unit": true
+	}
+}
