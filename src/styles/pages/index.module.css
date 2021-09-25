@@ -1,0 +1,28 @@
+.presentationCode {
+	font-family: 'Roboto Mono', monospace;
+	line-height: 42px;
+}
+
+.lineNumber {
+	display: inline-block;
+	text-align: center;
+	margin-right: 73px;
+	width: 20px;
+}
+
+@media (max-width: 576px) {
+	.presentationCode {
+		line-height: 26px;
+	}
+
+	.lineNumber {
+		display: none;
+	}
+}
+
+
+@media (min-width: 576px) and (max-width: 768px) {
+	.lineNumber {
+		margin-right: 0;
+	}
+}

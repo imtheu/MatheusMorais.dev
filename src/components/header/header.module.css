@@ -1,0 +1,51 @@
+.header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 46px 0 60px;
+}
+
+.languageNav ul {
+	display: flex;
+	padding: 0;
+}
+
+.languageNav li {
+	list-style: none;
+	position: relative;
+}
+
+.languageNav li+li {
+	margin-left: 15px;
+}
+
+.languageNav li+li::before {
+	content: "•";
+	position: absolute;
+	left: -10px;
+}
+
+.languageNav a {
+	text-decoration: none;
+}
+
+.themeSwitch {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	border: 0;
+	font-size: 0;
+	width: 25px;
+	height: 25.34px;
+	background: url("/images/sprite.svg");
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.themeSwitch.-toDark {
+	background-position: -3px -3px;
+}
+
+.themeSwitch.-toLight {
+	background-position: -28px -3px;
+}

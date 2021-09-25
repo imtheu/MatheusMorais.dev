@@ -1,0 +1,38 @@
+.container {
+	width: 1110px;
+	margin: 0 auto;
+}
+
+.space-top {
+	margin-top: 86px;
+}
+
+@media (max-width: 576px) {
+	.hide-mobile {
+		display: none;
+	}
+
+	.container {
+		width: 100%;
+		padding: 0 16px;
+		box-sizing: border-box;
+	}
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+	.container {
+		width: 540px;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+	.container {
+		width: 720px;
+	}
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+	.container {
+		width: 960px;
+	}
+}
