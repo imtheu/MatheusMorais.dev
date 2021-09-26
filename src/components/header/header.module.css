@@ -49,3 +49,15 @@
 .themeSwitch.-toLight {
 	background-position: -28px -3px;
 }
+
+@media (max-width: 768px) {
+	.logo {
+		font-size: 20px;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+	.logo {
+		font-size: 26px;
+	}
+}

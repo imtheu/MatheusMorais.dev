@@ -1,6 +1,7 @@
 .presentationCode {
 	font-family: 'Roboto Mono', monospace;
 	line-height: 42px;
+	min-height: 294px;
 }
 
 .lineNumber {
@@ -13,6 +14,8 @@
 @media (max-width: 576px) {
 	.presentationCode {
 		line-height: 26px;
+		min-height: 182px;
+		font-size: 20px;
 	}
 
 	.lineNumber {
@@ -20,9 +23,11 @@
 	}
 }
 
-
-@media (min-width: 576px) and (max-width: 768px) {
+@media (min-width: 576px) and (max-width: 992px) {
+	.presentationCode {
+		font-size: 22px;
+	}
 	.lineNumber {
-		margin-right: 0;
+		margin-right: 10px;
 	}
 }

@@ -19,7 +19,7 @@ const Header = () => {
 
 	return (
 		<header className={styles.header}>
-			<div className="medium-weight heading-1">
+			<div className={`medium-weight heading-1 ${styles.logo}`}>
 				<a href="/">
 					&#123; ...<span className="color-primary">MatheusMorais</span>[&quot;
 					<span className="color-secondary">dev</span>&quot;] &#125;

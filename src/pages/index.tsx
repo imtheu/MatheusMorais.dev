@@ -1,45 +1,66 @@
-import Typewriter from 'typewriter-effect';
+import React from 'react';
 
 import Header from '../components/header';
-
-import styles from '../styles/pages/index.module.css';
-
-const typeWriterDelay = 30;
-
-const presentationCode = (
-	<div className={`heading-1 ${styles.presentationCode}`}>
-		<Typewriter
-			onInit={(tw) => {
-				tw.changeDelay(typeWriterDelay)
-					.typeString(
-						`<span class="${styles.lineNumber} color-grey">1</span> <span class="color-purple">const</span> Matheus = <span class="color-grey-darker">&#123;</span><br /><span class="${styles.lineNumber} color-grey">2</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="color-grey-darker light-weight">// Hello! :D<br />`
-					)
-					.typeString(
-						`<span class="${styles.lineNumber} color-grey">3</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="color-grey-darker light-weight">// I'm a front-end developer</span><br />`
-					)
-					.typeString(
-						`<span class="${styles.lineNumber} color-grey">4</span> &nbsp;&nbsp;&nbsp;&nbsp;passion: "<span class="color-green">Front-end &hearts;</span>",<br />`
-					)
-					.typeString(
-						`<span class="${styles.lineNumber} color-grey">5</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="color-grey-darker light-weight">// and a computer science student</span><br />`
-					)
-					.typeString(
-						`<span class="${styles.lineNumber} color-grey">6</span> &nbsp;&nbsp;&nbsp;&nbsp;computerScientist: <span class="color-red">true</span><br />`
-					)
-					.typeString(
-						`<span class="${styles.lineNumber} color-grey">7</span> <span class="color-grey-darker">&#125;</span>&#59;`
-					)
-					.start();
-			}}
-		/>
-	</div>
-);
+import PresentationCode from '../components/presentationCode';
+import ProjectCard from '../components/projectCard';
+import Separator from '../components/separator';
+import Title from '../components/title';
 
 const Home = () => {
 	return (
 		<div>
 			<Header />
-			<div className="container">{presentationCode}</div>
+			<div className="container">
+				<PresentationCode />
+				<Separator />
+				<section>
+					<Title>About</Title>
+					<p className="subtitle col-9">
+						I’m Matheus, i’ve been working for 10 years with{' '}
+						<strong className="color-primary">web development</strong> and I’m a
+						front-end developer at{' '}
+						<a
+							href="https://letras.mus.br"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="color-secondary"
+						>
+							Letras.mus.br
+						</a>
+						.
+						<br />
+						<br />
+						Brazilian, I’m about to graduate in computer science.
+					</p>
+				</section>
+				<Separator />
+				<section>
+					<Title>Projects</Title>
+					<div className="row">
+						<ProjectCard
+							className="col-6"
+							title="Lorem Ipsum"
+							content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+								pharetra condimentum enim, eu blandit tortor placerat sit amet.
+								Fusce condimentum eros eget nunc ultricies lacinia."
+							imageSrc="/images/content/projects/doarei_thumbnail.png"
+						/>
+						<ProjectCard
+							className="col-6"
+							title="Lorem Ipsum"
+							content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+								pharetra condimentum enim, eu blandit tortor placerat sit amet.
+								Fusce condimentum eros eget nunc ultricies lacinia."
+							imageSrc="/images/content/projects/doarei_thumbnail.png"
+						/>
+					</div>
+				</section>
+				<Separator />
+				<section>
+					<Title>Blog</Title>
+				</section>
+				<Separator />
+			</div>
 		</div>
 	);
 };
