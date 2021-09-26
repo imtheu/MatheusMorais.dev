@@ -1,0 +1,40 @@
+.email {
+	font-size: 60px;
+}
+
+.contactLabel {
+	margin: 23px 0;
+}
+
+.socialContainer {
+	display: flex;
+	justify-content: space-between;
+	width: 400px;
+	margin: 0 auto 80px;
+}
+
+.social {
+	display: block;
+	width: 61px;
+	height: 70px;
+	font-size: 0;
+	background: url("/images/sprite.svg");
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.social.-instagram {
+	background-position: -3px -35px;
+}
+
+.social.-linkedin {
+	background-position: -200px -35px;
+}
+
+.social.-twitter {
+	background-position: -131px -35px;
+}
+
+.social.-github {
+	background-position: -67px -35px;
+}

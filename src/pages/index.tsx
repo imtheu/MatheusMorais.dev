@@ -1,5 +1,6 @@
 import { InferGetStaticPropsType } from 'next';
 import React from 'react';
+import Footer from '../components/footer';
 
 import Header from '../components/header';
 import PresentationCode from '../components/presentationCode';
@@ -69,6 +70,7 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 					<Title>Blog</Title>
 				</section>
 				<Separator />
+				<Footer />
 			</div>
 		</div>
 	);
