@@ -1,3 +1,4 @@
+import { InferGetStaticPropsType } from 'next';
 import React from 'react';
 
 import Header from '../components/header';
@@ -5,8 +6,19 @@ import PresentationCode from '../components/presentationCode';
 import ProjectCard from '../components/projectCard';
 import Separator from '../components/separator';
 import Title from '../components/title';
+import { getProjects } from '../services/projects';
 
-const Home = () => {
+export const getStaticProps = async () => {
+	const projects = await getProjects();
+
+	return {
+		props: {
+			projects
+		}
+	};
+};
+
+const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
 		<div>
 			<Header />
@@ -32,27 +44,24 @@ const Home = () => {
 						<br />
 						Brazilian, I’m about to graduate in computer science.
 					</p>
+					<a href="/" className="button">
+						Download my CV
+					</a>
 				</section>
 				<Separator />
 				<section>
 					<Title>Projects</Title>
 					<div className="row">
-						<ProjectCard
-							className="col-6"
-							title="Lorem Ipsum"
-							content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-								pharetra condimentum enim, eu blandit tortor placerat sit amet.
-								Fusce condimentum eros eget nunc ultricies lacinia."
-							imageSrc="/images/content/projects/doarei_thumbnail.png"
-						/>
-						<ProjectCard
-							className="col-6"
-							title="Lorem Ipsum"
-							content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-								pharetra condimentum enim, eu blandit tortor placerat sit amet.
-								Fusce condimentum eros eget nunc ultricies lacinia."
-							imageSrc="/images/content/projects/doarei_thumbnail.png"
-						/>
+						{props.projects.map((project) => (
+							<ProjectCard
+								key={project.slug}
+								className="col-6"
+								title={project.meta.title}
+								content={project.meta.description}
+								imageSrc={project.meta.thumbnail}
+								url={project.url}
+							/>
+						))}
 					</div>
 				</section>
 				<Separator />

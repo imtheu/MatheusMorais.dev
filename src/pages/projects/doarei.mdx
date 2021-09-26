@@ -1,0 +1,87 @@
+import ContentLayout from '../../layouts/contentLayout';
+import { MDXProvider } from '@mdx-js/react';
+import Separator from '../../components/separator';
+import Title from '../../components/title';
+import ContentTable from '../../components/contentTable';
+
+export const meta = {
+	title: 'Doarei',
+	author: 'Matheus Francisco',
+	description:
+		'Doarei connects people who can donate and people who need something, enabling them to help themselves. The website, developed by me, reached more than 30 thousand users in 4 years and more than 2 million page-views.',
+	thumbnail: '/images/content/projects/doarei/doarei_thumbnail.png'
+};
+
+# Doarei
+
+<p>
+	<a href="https://www.doarei.com.br" rel="noopener noreferrer" target="_blank">
+		Doarei
+	</a>{' '}
+	is a Brazilian website, created by myself and{' '}
+	<a
+		href="https://www.linkedin.com/in/franciellemorais/"
+		rel="noopener noreferrer"
+		target="_blank"
+	>
+		Francielle Morais
+	</a>
+	, with the purpose of helping people by facilitating the donation process.
+</p>
+
+Well-optimized for search engines and with a quick adhesion of the target audience, in addition to the excellent administration of <a href="https://www.linkedin.com/in/franciellemorais/" rel="noopener noreferrer" target="_blank">Francielle</a>, Doarei quickly reached its first 30 thousand users.
+
+## Version 1
+
+Doarei was developed while I was still studying web development. Although it's not as visually attractive, it's one of the jobs I'm most proud of.
+
+The development stack was:
+
+| Development | DevOps    | Structure  | Other tech       |
+| ----------- | --------- | ---------- | ---------------- |
+| PHP         | GIT       | SharedHost | Google Analytics |
+| MySQL       | BitBucket | CPanel     | Google Adsense   |
+| Javascript  |           | APACHE     |
+| JQuery      |           |            |
+| Vanilla CSS |           |            |
+| GULP        |           |            |
+
+---
+
+## Version 2 (Current)
+
+Quickly, Doarei needed more care as well, meaning that it also needed an update in its technologies, improvements to make the code more maintainable, in addition to improvements in performance, accessibility, usability and SEO.
+
+The development stack was:
+
+| Development | DevOps         | Structure | Other tech       |
+| ----------- | -------------- | --------- | ---------------- |
+| NodeJS      | GIT            | NGINX     | Google Analytics |
+| MySQL       | Github         | VPS       | Google Adsense   |
+| Javascript  | Github actions |           |
+| ReactJS     |                |           |
+| NextJS      |                |           |
+| Typescript  |                |           |
+| SASS        |                |           |
+
+---
+
+This is what one of our users told us:
+
+> “Acho um trabalho lindo. Não pensam só em si, pensam também no próximo. Mais pessoas deveriam ter esse coração.”
+>
+> (I think it's a beautiful job. They don't just think about themselves, they also think about others. More people should have that heart.)
+
+That's what makes me love programming. You can access Doarei at <a href="https://www.doarei.com.br" rel="noopener noreferrer" target="_blank">www.doarei.com.br</a>.
+
+export const components = {
+	h1: Title,
+	hr: Separator,
+	table: ContentTable
+};
+
+export default ({ children }) => (
+	<MDXProvider components={components}>
+		<ContentLayout meta={meta}>{children}</ContentLayout>
+	</MDXProvider>
+);
