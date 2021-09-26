@@ -7,6 +7,8 @@
 @import url("utils/colors.css");
 @import url("utils/font.css");
 
+@import url("components/button.css");
+
 body {
 	background: var(--background-color);
 	color: var(--font-color);

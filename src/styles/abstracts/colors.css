@@ -1,29 +1,35 @@
 :root {
+	/* Main colors */
 	--primary-color: #06D6A0;
 	--secondary-color: #E4B64B;
-
 	--background-color: #fff;
-
 	--font-color: #0F111A;
 
+	/* Util colors */
 	--purple-color: #9B3FD9;
 	--green-color: #A5B861;
 	--red-color: #FE5571;
 	--grey-color: #CFD9E5;
 	--grey-color-darker: #9AA6C5;
+
+	/* Hovers */
+	--primary-color-hover: #02b385;
 }
 
 [data-theme="dark"] {
+	/* Main colors */
 	--primary-color: #58FFD4;
 	--secondary-color: #E4B64B;
-
 	--background-color: #0F111A;
-
 	--font-color: #CFD9E5;
 
+	/* Util colors */
 	--purple-color: #C792EA;
 	--green-color: #A5B861;
 	--red-color: #F07178;
 	--grey-color: #CFD9E5;
 	--grey-color-darker: #464B5D;
+
+	/* Hovers */
+	--primary-color-hover: #16bd92;
 }

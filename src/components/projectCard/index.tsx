@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type PropsType = {
 	title: string;
@@ -18,6 +19,10 @@ const ProjectCard = (props: PropsType) => {
 			/>
 			<h1 className="subtitle medium-weight">{props.title}</h1>
 			<p>{props.content}</p>
+
+			<Link href="/">
+				<a className="button">Read more</a>
+			</Link>
 		</article>
 	);
 };
