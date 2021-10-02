@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 import styles from './postsCard.module.css';
+import useI18N from '../../hooks/useI18N';
 
 type PropsType = {
 	title: string;
@@ -12,7 +13,19 @@ type PropsType = {
 	date: Date;
 };
 
+const content: { [key: string]: Record<string, string> } = {
+	'en-US': {
+		externalText: 'External link • ',
+		buttonText: 'Read'
+	},
+	'pt-BR': {
+		externalText: 'Link externo • ',
+		buttonText: 'Ler'
+	}
+};
+
 const PostsCard = (props: PropsType) => {
+	const { locale } = useI18N();
 	return (
 		<article className={`${props.className} ${styles.postCard}`}>
 			{props.external ? (
@@ -28,8 +41,8 @@ const PostsCard = (props: PropsType) => {
 			)}
 
 			<p className="color-grey-darker small-text">
-				{props.external ? 'External link • ' : null}
-				{props.date.toLocaleDateString('pt-BR', {
+				{props.external ? content[locale].externalText : null}
+				{props.date.toLocaleDateString(locale, {
 					day: 'numeric',
 					month: 'long',
 					year: 'numeric'
@@ -45,11 +58,11 @@ const PostsCard = (props: PropsType) => {
 					href={props.url}
 					className="button"
 				>
-					Read
+					{content[locale].buttonText}
 				</a>
 			) : (
 				<Link href={props.url}>
-					<a className="button">Read</a>
+					<a className="button">{content[locale].buttonText}</a>
 				</Link>
 			)}
 		</article>

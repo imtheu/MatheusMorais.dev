@@ -3,7 +3,7 @@ import { Html, Head, Main, NextScript } from 'next/document';
 
 const Document = () => {
 	return (
-		<Html lang="pt-br">
+		<Html>
 			<Head>
 				<meta name="theme-color" content="#06D6A0" />
 				<link
