@@ -50,6 +50,19 @@
 	background-position: -28px -3px;
 }
 
+@media (max-width: 576px) {
+	.header {
+		padding: 46px 16px 60px;
+		box-sizing: border-box;
+		align-items: flex-start;
+	}
+
+	.themeSwitch {
+		top: 43px;
+    right: 23px;
+	}
+}
+
 @media (max-width: 768px) {
 	.logo {
 		font-size: 20px;

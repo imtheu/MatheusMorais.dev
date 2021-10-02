@@ -1,0 +1,6 @@
+.postCard {
+	margin-top: 32px;
+	padding: 20px 42px 0;
+	border: 1px solid var(--grey-color);
+	border-radius: 10px;
+}
