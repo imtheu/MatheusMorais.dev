@@ -1,7 +1,40 @@
 import React from 'react';
 
-const Blog = () => {
-	return <div></div>;
+import PostsCard from '../../components/postsCard';
+import Title from '../../components/title';
+
+import DefaultLayout from '../../layouts/default';
+
+import { getPosts } from '../../services/posts';
+
+export const getStaticProps = async ({ locale }: { locale: string }) => {
+	const posts = await getPosts();
+
+	return {
+		props: {
+			posts
+		}
+	};
 };
+
+const Blog = (props) => {
+	return (
+		<>
+			<Title>Blog</Title>
+			{props.posts.map((post) => (
+				<PostsCard
+					key={post.slug}
+					title={post.meta.title}
+					content={post.meta.description}
+					url={post.url}
+					external={post.external}
+					date={new Date(post.meta.date)}
+				/>
+			))}
+		</>
+	);
+};
+
+Blog.layout = DefaultLayout;
 
 export default Blog;

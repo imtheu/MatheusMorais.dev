@@ -1,8 +1,6 @@
 import React from 'react';
 import { InferGetStaticPropsType } from 'next';
 
-import Footer from '../components/footer';
-import Header from '../components/header';
 import PostsCard from '../components/postsCard';
 import ProjectCard from '../components/projectCard';
 import Separator from '../components/separator';
@@ -12,6 +10,7 @@ import About from '../components/home/about';
 
 import { getPosts } from '../services/posts';
 import { getProjects } from '../services/projects';
+import DefaultLayout from '../layouts/default';
 
 export const getStaticProps = async ({ locale }: { locale: string }) => {
 	const projects = await getProjects(locale);
@@ -27,8 +26,7 @@ export const getStaticProps = async ({ locale }: { locale: string }) => {
 
 const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
-		<div>
-			<Header />
+		<>
 			<div className="container">
 				<PresentationCode />
 				<Separator />
@@ -51,7 +49,7 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 				</section>
 				<Separator />
 				<section>
-					<Title>Blog</Title>
+					<Title url="/blog">Blog</Title>
 					{props.posts.map((post) => (
 						<PostsCard
 							key={post.slug}
@@ -63,11 +61,11 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 						/>
 					))}
 				</section>
-				<Separator />
-				<Footer />
 			</div>
-		</div>
+		</>
 	);
 };
+
+Home.layout = DefaultLayout;
 
 export default Home;
