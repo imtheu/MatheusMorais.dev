@@ -1,18 +1,36 @@
 import fs from 'fs';
 import path from 'path';
 
-const postsDir = path.resolve(process.cwd(), 'src', 'pages', 'blog');
+const projectsDir = path.resolve(process.cwd(), 'src', 'content', 'posts');
 
-const getMarkdownFiles = () => {
-	return fs.readdirSync(postsDir).filter((file) => file.includes('.mdx'));
-};
+const getLanguages = () => fs.readdirSync(projectsDir);
 
-export const getPosts = () => {
-	const markdownFiles = getMarkdownFiles();
+const getMarkdownFiles = (language: string) =>
+	fs.readdirSync(path.join(projectsDir, language));
+
+export const getPosts = (locale: string) => {
+	const files = getMarkdownFiles(locale).map((file) => ({
+		file,
+		language: locale
+	}));
+
+	const languages = getLanguages();
+	const untranslatedFiles = languages
+		.filter((language) => language !== locale)
+		.map((language) => {
+			return getMarkdownFiles(language).map((file) => {
+				if (!files.some((translatedFile) => translatedFile.file === file)) {
+					return { file, language };
+				}
+			});
+		})
+		.flat()
+		.filter((file): file is typeof files[0] => Boolean(file));
 
 	return Promise.all(
-		markdownFiles.map(async (file) => {
-			const mdx = await import(`../pages/blog/${file}`);
+		[...files, ...untranslatedFiles].map(async ({ file, language }) => {
+			const mdx = await import(`../content/posts/${language}/${file}`);
+
 			return {
 				url: mdx.meta.externalLink ?? `/blog/${file.replace(/\.mdx?$/, '')}`,
 				external: !!mdx.meta.externalLink,

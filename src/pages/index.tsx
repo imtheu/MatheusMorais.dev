@@ -14,7 +14,7 @@ import DefaultLayout from '../layouts/default';
 
 export const getStaticProps = async ({ locale }: { locale: string }) => {
 	const projects = await getProjects(locale);
-	const posts = await getPosts();
+	const posts = await getPosts(locale);
 
 	return {
 		props: {

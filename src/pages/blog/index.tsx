@@ -8,7 +8,7 @@ import DefaultLayout from '../../layouts/default';
 import { getPosts } from '../../services/posts';
 
 export const getStaticProps = async ({ locale }: { locale: string }) => {
-	const posts = await getPosts();
+	const posts = await getPosts(locale);
 
 	return {
 		props: {

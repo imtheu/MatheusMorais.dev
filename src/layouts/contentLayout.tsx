@@ -7,12 +7,12 @@ import Footer from '../components/footer';
 
 const ContentLayout = (props: {
 	children: JSX.Element;
-	meta: ProjectMetaType;
+	meta?: ProjectMetaType;
 }) => {
 	return (
 		<>
 			<Head>
-				<title>{props.meta.title} - MatheusMorais.dev</title>
+				<title>{props?.meta?.title} - MatheusMorais.dev</title>
 			</Head>
 			<Header />
 			<main className="container">
