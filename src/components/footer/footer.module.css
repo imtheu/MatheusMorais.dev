@@ -18,7 +18,7 @@
 	width: 61px;
 	height: 70px;
 	font-size: 0;
-	background: url("/images/sprite.svg");
+	background: url('/images/sprite.svg');
 	background-repeat: no-repeat;
 	cursor: pointer;
 }
@@ -56,5 +56,5 @@
 @media (min-width: 576px) and (max-width: 768px) {
 	.email {
 		font-size: 42px;
-	}	
+	}
 }

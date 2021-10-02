@@ -7,8 +7,7 @@ import styles from './presentationCode.module.css';
 
 const typeWriterDelay = 30;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const content: { [key: string]: any } = {
+const content: { [key: string]: Record<string, string> } = {
 	'en-US': {
 		greeting: 'Hello!',
 		job: "I'm a front-end developer",

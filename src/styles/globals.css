@@ -1,14 +1,14 @@
 @import '~normalize.css/normalize.css';
 
-@import url("abstracts/colors.css");
-@import url("abstracts/fonts.css");
-@import url("abstracts/grid.css");
+@import url('abstracts/colors.css');
+@import url('abstracts/fonts.css');
+@import url('abstracts/grid.css');
 
-@import url("utils/colors.css");
-@import url("utils/font.css");
+@import url('utils/colors.css');
+@import url('utils/font.css');
 
-@import url("components/button.css");
-@import url("components/content.css");
+@import url('components/button.css');
+@import url('components/content.css');
 
 body {
 	background: var(--background-color);

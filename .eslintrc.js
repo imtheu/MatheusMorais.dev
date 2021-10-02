@@ -40,6 +40,7 @@ module.exports = {
 				specialLink: ['hrefLeft', 'hrefRight'],
 				aspects: ['invalidHref', 'preferButton']
 			}
-		]
+		],
+		'react/prop-types': 0
 	}
 };

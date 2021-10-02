@@ -1,5 +1,5 @@
 import React from 'react';
-import { InferGetStaticPropsType } from 'next';
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 
 import PostsCard from '../components/postsCard';
 import ProjectCard from '../components/projectCard';
@@ -12,9 +12,9 @@ import { getPosts } from '../services/posts';
 import { getProjects } from '../services/projects';
 import DefaultLayout from '../layouts/default';
 
-export const getStaticProps = async ({ locale }: { locale: string }) => {
-	const projects = await getProjects(locale);
-	const posts = await getPosts(locale);
+export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
+	const projects = await getProjects(locale ?? '');
+	const posts = await getPosts(locale ?? '');
 
 	return {
 		props: {
@@ -35,7 +35,7 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 				<section>
 					<Title>Projects</Title>
 					<div className="row">
-						{props.projects.map((project) => (
+						{props.projects?.map((project) => (
 							<ProjectCard
 								key={project.slug}
 								className="col-6"
@@ -50,7 +50,7 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 				<Separator />
 				<section>
 					<Title url="/blog">Blog</Title>
-					{props.posts.map((post) => (
+					{props.posts?.map((post) => (
 						<PostsCard
 							key={post.slug}
 							title={post.meta.title}

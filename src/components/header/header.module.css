@@ -15,12 +15,12 @@
 	position: relative;
 }
 
-.languageNav li+li {
+.languageNav li + li {
 	margin-left: 15px;
 }
 
-.languageNav li+li::before {
-	content: "•";
+.languageNav li + li::before {
+	content: '•';
 	position: absolute;
 	left: -10px;
 }
@@ -37,7 +37,7 @@
 	font-size: 0;
 	width: 25px;
 	height: 25.34px;
-	background: url("/images/sprite.svg");
+	background: url('/images/sprite.svg');
 	background-repeat: no-repeat;
 	cursor: pointer;
 }
@@ -59,7 +59,7 @@
 
 	.themeSwitch {
 		top: 43px;
-    right: 23px;
+		right: 23px;
 	}
 }
 

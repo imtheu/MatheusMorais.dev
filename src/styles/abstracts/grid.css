@@ -19,7 +19,7 @@
 
 /* stylelint-disable-next-line selector-max-universal */
 .row > * + * {
-  margin-left: 20px;
+	margin-left: 20px;
 }
 
 .col-6 {
@@ -29,7 +29,6 @@
 .col-9 {
 	width: 75%;
 }
-
 
 @media (max-width: 576px) {
 	.container {
@@ -42,7 +41,8 @@
 		flex-direction: column;
 	}
 
-	.col-6, .col-9 {
+	.col-6,
+	.col-9 {
 		width: 100%;
 	}
 
@@ -50,7 +50,6 @@
 	.row > * + * {
 		margin-left: 0;
 	}
-	
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
