@@ -27,6 +27,7 @@ const PresentationCode = () => {
 	return (
 		<div className={`heading-1 ${styles.presentationCode}`}>
 			<Typewriter
+				key={locale}
 				onInit={(tw) => {
 					tw.changeDelay(typeWriterDelay)
 						.typeString(

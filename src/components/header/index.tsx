@@ -26,8 +26,7 @@ const Header = () => {
 		language: string
 	) => {
 		event.preventDefault();
-		await router.push(router.pathname, undefined, { locale: language });
-		router.reload();
+		await router.push(router.asPath, undefined, { locale: language });
 	};
 
 	return (
