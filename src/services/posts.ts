@@ -28,15 +28,17 @@ export const getPosts = (locale: string) => {
 		.filter((file): file is typeof files[0] => Boolean(file));
 
 	return Promise.all(
-		[...files, ...untranslatedFiles].map(async ({ file, language }) => {
-			const mdx = await import(`../content/posts/${language}/${file}`);
+		[...files, ...untranslatedFiles]
+			.filter(({ file }) => file.includes('.mdx'))
+			.map(async ({ file, language }) => {
+				const mdx = await import(`../content/posts/${language}/${file}`);
 
-			return {
-				url: mdx.meta.externalLink ?? `/blog/${file.replace(/\.mdx?$/, '')}`,
-				external: !!mdx.meta.externalLink,
-				slug: file.replace(/\.mdx?$/, ''),
-				meta: mdx.meta
-			};
-		})
+				return {
+					url: mdx.meta.externalLink ?? `/blog/${file.replace(/\.mdx?$/, '')}`,
+					external: !!mdx.meta.externalLink,
+					slug: file.replace(/\.mdx?$/, ''),
+					meta: mdx.meta
+				};
+			})
 	);
 };
