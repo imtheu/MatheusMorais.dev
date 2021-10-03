@@ -1,3 +1,4 @@
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import React from 'react';
 
 import PostsCard from '../../components/postsCard';
@@ -7,8 +8,8 @@ import DefaultLayout from '../../layouts/default';
 
 import { getPosts } from '../../services/posts';
 
-export const getStaticProps = async ({ locale }: { locale: string }) => {
-	const posts = await getPosts(locale);
+export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
+	const posts = await getPosts(locale ?? '');
 
 	return {
 		props: {
@@ -17,7 +18,7 @@ export const getStaticProps = async ({ locale }: { locale: string }) => {
 	};
 };
 
-const Blog = (props) => {
+const Blog = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
 		<>
 			<Title>Blog</Title>
