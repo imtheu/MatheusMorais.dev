@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 
 import PostsCard from '../components/postsCard';
@@ -27,6 +28,9 @@ export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
 const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
 		<>
+			<Head>
+				<title>MatheusMorais.dev</title>
+			</Head>
 			<div className="container">
 				<PresentationCode />
 				<Separator />
