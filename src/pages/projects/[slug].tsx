@@ -1,14 +1,13 @@
 import { MDXProvider } from '@mdx-js/react';
-import { useRouter } from 'next/router';
-
-import dynamic from 'next/dynamic';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import ContentLayout from '../../layouts/contentLayout';
 
 import Separator from '../../components/separator';
 import Title from '../../components/title';
 import ContentTable from '../../components/contentTable';
-import useI18N from '../../hooks/useI18N';
+
+import { getAllProjects } from '../../services/projects';
 
 const components = {
 	h1: Title,
@@ -16,26 +15,43 @@ const components = {
 	table: ContentTable
 };
 
-const Project = () => {
-	const router = useRouter();
-	const { locale } = useI18N();
+export const getStaticPaths: GetStaticPaths = () => {
+	const projects = getAllProjects();
+	return {
+		paths: projects.map((project) => {
+			return {
+				params: {
+					slug: project.slug
+				},
+				locale: project.language
+			};
+		}),
+		fallback: false
+	};
+};
 
-	if (!router.query.slug || !locale) {
-		return <></>;
-	}
-
-	const ContentComponent = dynamic(
-		() => import(`../../content/projects/${locale}/${router.query.slug}.mdx`),
-		{ ssr: true }
-	);
-
+export const getStaticProps: GetStaticProps = ({ locale, params }) => {
 	const meta =
 		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		require(`../../content/projects/${locale}/${router.query.slug}.mdx`).meta;
+		require(`../../content/projects/${locale}/${params?.slug}.mdx`).meta;
+
+	return {
+		props: {
+			meta,
+			locale,
+			slug: params?.slug ?? ''
+		}
+	};
+};
+
+const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+	const ContentComponent =
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
+		require(`../../content/projects/${props.locale}/${props.slug}.mdx`).default;
 
 	return (
 		<MDXProvider components={components}>
-			<ContentLayout meta={meta}>
+			<ContentLayout meta={props.meta}>
 				<ContentComponent />
 			</ContentLayout>
 		</MDXProvider>

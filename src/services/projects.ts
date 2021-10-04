@@ -39,3 +39,18 @@ export const getProjects = (locale: string) => {
 		})
 	);
 };
+
+export const getAllProjects = () => {
+	const languages = getLanguages();
+	const files = languages
+		.map((language) =>
+			getMarkdownFiles(language).map((file) => ({
+				file,
+				language,
+				slug: file.replace(/\.mdx?$/, '')
+			}))
+		)
+		.flat();
+
+	return files;
+};
