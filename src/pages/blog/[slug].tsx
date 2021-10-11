@@ -7,7 +7,7 @@ import Separator from '../../components/separator';
 import Title from '../../components/title';
 import ContentTable from '../../components/contentTable';
 
-import { getAllPosts } from '../../services/posts';
+import { getAllPosts, getPostLanguages } from '../../services/posts';
 
 const components = {
 	h1: Title,
@@ -26,11 +26,22 @@ export const getStaticPaths: GetStaticPaths = () => {
 				locale: post.language
 			};
 		}),
-		fallback: false
+		fallback: true
 	};
 };
 
 export const getStaticProps: GetStaticProps = ({ locale, params }) => {
+	const postLanguages = getPostLanguages((params?.slug as string) ?? '');
+
+	if (!postLanguages.includes(locale ?? '')) {
+		return {
+			redirect: {
+				destination: `/${postLanguages[0]}/blog/${params?.slug}`,
+				permanent: false
+			}
+		};
+	}
+
 	const meta =
 		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		require(`../../content/posts/${locale}/${params?.slug}.mdx`).meta;
@@ -39,15 +50,22 @@ export const getStaticProps: GetStaticProps = ({ locale, params }) => {
 		props: {
 			meta,
 			locale,
-			slug: params?.slug ?? ''
+			slug: params?.slug ?? '',
+			locales: postLanguages
 		}
 	};
 };
 
 const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const ContentComponent =
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		require(`../../content/posts/${props.locale}/${props.slug}.mdx`).default;
+	let ContentComponent;
+
+	try {
+		ContentComponent =
+			// eslint-disable-next-line @typescript-eslint/no-var-requires
+			require(`../../content/posts/${props.locale}/${props.slug}.mdx`).default;
+	} catch {
+		return <></>;
+	}
 
 	return (
 		<MDXProvider components={components}>
@@ -59,6 +77,8 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 					language: props.locale.replace('-', '_'),
 					url: `https://matheusmorais.dev/blog/${props.slug}`
 				}}
+				locale={props.locale}
+				locales={props.locales}
 			>
 				<>{ContentComponent ? <ContentComponent /> : null}</>
 			</ContentLayout>

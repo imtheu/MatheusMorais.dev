@@ -21,16 +21,16 @@
 	/* Main colors */
 	--primary-color: #58ffd4;
 	--secondary-color: #e4b64b;
-	--background-color: #0f111a;
-	--background-highlight-color: #030613;
+	--background-color: #262a3a;
+	--background-highlight-color: #2d3142;
 	--font-color: #cfd9e5;
 
 	/* Util colors */
 	--purple-color: #c792ea;
 	--green-color: #a5b861;
 	--red-color: #f07178;
-	--grey-color: #cfd9e5;
-	--grey-color-darker: #464b5d;
+	--grey-color: #464b5d;
+	--grey-color-darker: #616980;
 
 	/* Hovers */
 	--primary-color-hover: #16bd92;

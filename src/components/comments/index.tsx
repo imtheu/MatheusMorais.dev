@@ -1,5 +1,7 @@
 import { DiscussionEmbed } from 'disqus-react';
 
+import styles from './comments.module.css';
+
 type PropsType = {
 	url: string;
 	identifier: string;
@@ -9,7 +11,7 @@ type PropsType = {
 
 const Comments = (props: PropsType) => {
 	return (
-		<section>
+		<section className={styles.comments}>
 			<DiscussionEmbed
 				shortname="matheusmorais"
 				config={{

@@ -1,12 +1,19 @@
 import React from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import { ProjectMetaType } from '../types/Project';
 
-import Header from '../components/header';
-import Footer from '../components/footer';
-import Separator from '../components/separator';
 import Comments from '../components/comments';
+import Footer from '../components/footer';
+import Header from '../components/header';
+import Notification from '../components/notification';
+import Separator from '../components/separator';
+
+const languages = {
+	'en-US': 'English',
+	'pt-BR': 'Português'
+};
 
 type PropsType = {
 	children: JSX.Element;
@@ -19,9 +26,21 @@ type PropsType = {
 				title: string;
 		  }
 		| undefined;
+	locale: string;
+	locales: string[];
 };
 
 const ContentLayout = (props: PropsType) => {
+	const router = useRouter();
+
+	const toggleLanguage = async (
+		event: React.FormEvent<HTMLAnchorElement>,
+		language: string
+	) => {
+		event.preventDefault();
+		await router.push(router.asPath, undefined, { locale: language });
+	};
+
 	return (
 		<>
 			<Head>
@@ -29,6 +48,26 @@ const ContentLayout = (props: PropsType) => {
 			</Head>
 			<Header />
 			<main className="container">
+				{props.locales?.length > 1 ? (
+					<Notification>
+						<>
+							This post is also available in{' '}
+							{props.locales
+								.filter((locale) => locale !== props.locale)
+								.map((locale) => (
+									// eslint-disable-next-line jsx-a11y/anchor-is-valid
+									<a
+										key={locale}
+										onClick={(event) => toggleLanguage(event, locale)}
+										href="#"
+										className="color-grey-darker medium-weight"
+									>
+										{languages[locale as 'en-US' | 'pt-BR']}
+									</a>
+								))}
+						</>
+					</Notification>
+				) : null}
 				<div className="content">{props.children}</div>
 				<Separator />
 				{props.comments ? (
