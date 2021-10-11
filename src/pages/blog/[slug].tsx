@@ -1,14 +1,13 @@
 import { MDXProvider } from '@mdx-js/react';
-import { useRouter } from 'next/router';
-
-import dynamic from 'next/dynamic';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import ContentLayout from '../../layouts/contentLayout';
 
 import Separator from '../../components/separator';
 import Title from '../../components/title';
 import ContentTable from '../../components/contentTable';
-import useI18N from '../../hooks/useI18N';
+
+import { getAllPosts } from '../../services/posts';
 
 const components = {
 	h1: Title,
@@ -16,36 +15,51 @@ const components = {
 	table: ContentTable
 };
 
-const Project = () => {
-	const router = useRouter();
-	const { locale } = useI18N();
+export const getStaticPaths: GetStaticPaths = () => {
+	const posts = getAllPosts();
+	return {
+		paths: posts.map((post) => {
+			return {
+				params: {
+					slug: post.slug
+				},
+				locale: post.language
+			};
+		}),
+		fallback: false
+	};
+};
 
-	if (!router.query.slug || !locale) {
-		return <></>;
-	}
+export const getStaticProps: GetStaticProps = ({ locale, params }) => {
+	const meta =
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
+		require(`../../content/posts/${locale}/${params?.slug}.mdx`).meta;
 
-	let ContentComponent: React.ComponentType | null = null;
-	let meta;
-	try {
-		ContentComponent = dynamic(
-			() => import(`../../content/posts/${locale}/${router.query.slug}.mdx`),
-			{ ssr: true }
-		);
-
-		meta =
-			// eslint-disable-next-line @typescript-eslint/no-var-requires
-			require(`../../content/posts/${locale}/${router.query.slug}.mdx`).meta;
-	} catch {
-		if (locale === 'pt-BR') {
-			router.push(router.asPath, undefined, { locale: 'en-US' });
-		} else if (locale === 'en-US') {
-			router.push(router.asPath, undefined, { locale: 'pt-BR' });
+	return {
+		props: {
+			meta,
+			locale,
+			slug: params?.slug ?? ''
 		}
-	}
+	};
+};
+
+const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+	const ContentComponent =
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
+		require(`../../content/posts/${props.locale}/${props.slug}.mdx`).default;
 
 	return (
 		<MDXProvider components={components}>
-			<ContentLayout meta={meta}>
+			<ContentLayout
+				meta={props.meta}
+				comments={{
+					title: props.meta?.title,
+					identifier: `post_${props.slug}`,
+					language: props.locale.replace('-', '_'),
+					url: `https://matheusmorais.dev/blog/${props.slug}`
+				}}
+			>
 				<>{ContentComponent ? <ContentComponent /> : null}</>
 			</ContentLayout>
 		</MDXProvider>

@@ -1,12 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 
-const projectsDir = path.resolve(process.cwd(), 'src', 'content', 'posts');
+const postsDir = path.resolve(process.cwd(), 'src', 'content', 'posts');
 
-const getLanguages = () => fs.readdirSync(projectsDir);
+const getLanguages = () => fs.readdirSync(postsDir);
 
 const getMarkdownFiles = (language: string) =>
-	fs.readdirSync(path.join(projectsDir, language));
+	fs.readdirSync(path.join(postsDir, language));
 
 export const getPosts = (locale: string) => {
 	const files = getMarkdownFiles(locale).map((file) => ({
@@ -41,4 +41,19 @@ export const getPosts = (locale: string) => {
 				};
 			})
 	);
+};
+
+export const getAllPosts = () => {
+	const languages = getLanguages();
+	const files = languages
+		.map((language) =>
+			getMarkdownFiles(language).map((file) => ({
+				file,
+				language,
+				slug: file.replace(/\.mdx?$/, '')
+			}))
+		)
+		.flat();
+
+	return files;
 };
