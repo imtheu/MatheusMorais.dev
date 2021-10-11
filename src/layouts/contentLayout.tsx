@@ -26,8 +26,8 @@ type PropsType = {
 				title: string;
 		  }
 		| undefined;
-	locale: string;
-	locales: string[];
+	locale?: string;
+	locales?: string[];
 };
 
 const ContentLayout = (props: PropsType) => {
@@ -48,7 +48,7 @@ const ContentLayout = (props: PropsType) => {
 			</Head>
 			<Header />
 			<main className="container">
-				{props.locales?.length > 1 ? (
+				{props.locales && props.locales.length > 1 ? (
 					<Notification>
 						<>
 							This post is also available in{' '}
