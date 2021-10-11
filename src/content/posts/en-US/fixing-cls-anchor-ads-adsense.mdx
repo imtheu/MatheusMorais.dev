@@ -1,0 +1,82 @@
+export const meta = {
+	title: 'How to fix Cumulative Layout Shift in Adsense anchor ads',
+	author: 'Matheus Francisco',
+	description:
+		'Google introduced mobile anchor ads for Adsense (FINALLY!!), but it moves the page content down and causes too much CLS',
+	date: '2021-10-12'
+};
+
+# How to fix Cumulative Layout Shift (CLS) in Adsense anchor ads
+
+Recently, Google once again presented us with anchor ads (or sticky ads, if you will) on Adsense
+and granted our (or mine, at least) immeasurable desire to place fixed ads on pages without breaking any policy!
+
+...But it inserts a padding-top in the body tag and causes layout shift. 😠
+
+![cls](/images/content/posts/fixing-cls-anchor-ads-adsense/cls.png)
+
+## What is Cumulative Layout Shift?
+
+Cumulative Layout Shift is a metric that measures how much the layout changes unexpectedly.
+In other words, in short, it is when an element on the page changes position without the user having made any interaction for this to happen.
+
+In addition to being a metric that measures how irritated your user is about things unexpectedly dancing on your page,
+it's also a [Core Web Vitals](https://web.dev/vitals/) metric, which Google started using as one of its ranking items.
+
+## So... what is happening?
+
+I was getting a terrible CLS rating and I realized that only the anchor ad caused 0.19 of CLS (CLS above 0.25 is bad).
+Turns out that anchor ads add a padding-top to the body tag corresponding to the size of the ad as you scroll.
+
+![Adsense adding padding-top on body as you scroll](/images/content/posts/fixing-cls-anchor-ads-adsense/body-padding.gif)
+
+And it not only shifts the entire layout, it also leaves this weird space on top of the header:
+![](/images/content/posts/fixing-cls-anchor-ads-adsense/ad-above-header.png)
+
+## How to fix?
+
+First things first, you need to consider that
+[you can disable ads from sticking to the top of your page](https://support.google.com/adsense/answer/7478225?hl=en). But according to Google:
+
+> Our experiments show that anchor ads perform better at the top of the user's screen.
+
+It doesn't sound good, so the best solution I found was to remove these styles as soon as they are inserted.
+You can do this with [MutationObserver](https://developer.mozilla.org/docs/Web/API/MutationObserver):
+
+```javascript
+document.addEventListener('DOMContentLoaded', () => {
+	const body = document.body;
+	const observer = new MutationObserver(() => {
+		body.style.padding = '';
+	});
+	observer.observe(body, {
+		attributes: true,
+		attributeFilter: ['style']
+	});
+});
+```
+
+What this does is:
+
+1. When we instantiate the MutationObserver, we pass it a callback function that will be called for each DOM mutation.
+   In this case, we create a function that clears the body's padding
+2. So, we watch whenever there are mutations in the body attributes, more specifically filtering only the style attribute.
+   Thus, when there is a mutation, the created function will be called.
+3. We wrap all of this in an event listener that runs when the document is fully loaded.
+
+Note that, for the sake of usability, when you go back to the top of the page, you must provide a way for the ad not to be on top of your header.
+For that, I recommend that you check if the ad is present:
+
+```javascript
+const isAdDisplayed = !!document.querySelector(
+	"ins.adsbygoogle[data-ad-status='filled'][data-anchor-shown='true'][data-anchor-status='displayed']"
+);
+```
+
+And if it is and the scroll is at the top of the page,
+add the `position: relative;` or `position: fixed;` in the header and move it down with the `top: ...px;`
+
+For other types of ads, you can read adsense's own guide on
+[how to reduce layout shift](https://developers.google.com/publisher-tag/guides/minimize-layout-shift).
+
+That's it! Thanks for reading 😉

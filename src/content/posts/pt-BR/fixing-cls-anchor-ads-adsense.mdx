@@ -1,0 +1,86 @@
+export const meta = {
+	title:
+		'Como corrigir o Cumulative Layout Shift nos anúncios de âncora do Adsense',
+	author: 'Matheus Francisco',
+	description:
+		'O Google começou a adotar anúncios de âncora no Adsense (FINALMENTE!!!), mas ele move a página para baixo e causa muito CLS',
+	date: '2021-10-12'
+};
+
+# Corrigindo o Cumulative Layout Shift (CLS) nos anúncios de âncora do Adsense
+
+Recentemente, o Google nos presenteou mais uma vez com anúncios de âncora (ou anchor ads, ou anúncios fixos, se preferir) no Adsense
+e realizou os nossos (ou o meu, pelo menos) infinitos desejos de colocar anúncios fixos na página sem quebrar nenhuma política.
+
+...Mas ele insere um padding-top no body e causa layout shift. 😠
+
+![cls](/images/content/posts/fixing-cls-anchor-ads-adsense/cls.png)
+
+## O que é Cumulative Layout Shift?
+
+Cumulative Layout Shift é uma métrica que mede o quanto do layout muda inesperadamente.
+Em outras palavras, resumidamente, é quando um elemento da página muda de posição ou de tamanho,
+sem que o usuário tenha interagido com a página para que isso tenha acontecido.
+
+Além de ser uma métrica que mede o quão irritado seu usuário está com as coisas dançando aleatóriamente na sua página,
+CLS também é uma métrica do [Core Web Vitals](https://web.dev/vitals/) (Principais métricas da web),
+do qual o Google começou a usar como um dos quesitos de ranqueamento.
+
+## Então... o que está acontecendo?
+
+Percebi que eu estava recebendo uma nota horrível de CLS e percebi que só os anúncios de âncora já causavam 0.19 de CLS
+(sendo que CLS acima de 0.25 é ruim).
+Então verifiquei que os anúncios de âncora adicionavam um padding-top na tag body com o tamanho correspondente ao tamaho do anúncio,
+a medida que o usuário rolasse a página:
+
+![Adsense adicionando padding-top ao scrollar](/images/content/posts/fixing-cls-anchor-ads-adsense/body-padding.gif)
+
+E ele não só move o conteúdo todo pra baixo, como também deixa esse espaço esquisito acima do cabeçalho:
+![](/images/content/posts/fixing-cls-anchor-ads-adsense/ad-above-header.png)
+
+## Como corrigir?
+
+Primeiro de tudo, você precisa considerar que
+[você pode desabilitar os anúncios de ficarem fixos no topo da página](https://support.google.com/adsense/answer/7478225?hl=pt). Mas de acordo com o Google:
+
+> Nossa experiência mostra que os anúncios âncora apresentam melhor desempenho na parte superior da tela do usuário.
+
+Não soa bem, a melhor solução que eu encontrei foi remover esses estilos assim que são inseridos.
+Você pode fazer isso com o [MutationObserver](https://developer.mozilla.org/pt-BR/docs/Web/API/MutationObserver):
+
+```javascript
+document.addEventListener('DOMContentLoaded', () => {
+	const body = document.body;
+	const observer = new MutationObserver(() => {
+		body.style.padding = '';
+	});
+	observer.observe(body, {
+		attributes: true,
+		attributeFilter: ['style']
+	});
+});
+```
+
+O que isso faz é:
+
+1. Quando instanciamos o MutationObserver, passamos uma função de callback que será chamada para cada mutação no DOM.
+   Nesse caso, nós criamos uma função que limpa o padding do body.
+2. Então, nós observamos sempre que houver alguma mutação nos atributos do body, mais especificamente filtrando apenas o atributo style.
+3. Por fim, colocamos isso tudo dentro de um event listener que executa quando o documento está carregado e pronto.
+
+Perceba que, levando em consideração a usabilidade, quando você voltar ao topo da página,
+você deve fornecer um jeito do anúncio não ficar em cima do seu cabeçalho.
+Para isso, eu recomendo que você cheque se o anúncio está presente:
+
+```javascript
+const isAdDisplayed = !!document.querySelector(
+	"ins.adsbygoogle[data-ad-status='filled'][data-anchor-shown='true'][data-anchor-status='displayed']"
+);
+```
+
+E se está e o scroll está no topo da página,
+adicione um `position: relative;` ou `position: fixed;` no cabeçalho e mova-o para baixo com `top: ...px;`.
+
+Para outro tipos de anúncio, você pode ler o próprio guia do Adsense de [como minimizar o layout shift](https://developers.google.com/publisher-tag/guides/minimize-layout-shift).
+
+É isso! Obrigado por ler 😉
