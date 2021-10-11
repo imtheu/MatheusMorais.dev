@@ -3,16 +3,18 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import ContentLayout from '../../layouts/contentLayout';
 
+import CodeBlock from '../../components/codeblock';
+import ContentTable from '../../components/contentTable';
 import Separator from '../../components/separator';
 import Title from '../../components/title';
-import ContentTable from '../../components/contentTable';
 
 import { getAllPosts, getPostLanguages } from '../../services/posts';
 
 const components = {
 	h1: Title,
 	hr: Separator,
-	table: ContentTable
+	table: ContentTable,
+	code: CodeBlock
 };
 
 export const getStaticPaths: GetStaticPaths = () => {

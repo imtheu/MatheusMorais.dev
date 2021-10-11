@@ -10,6 +10,7 @@
 .content h1 {
 	font-size: 48px;
 	text-align: center;
+	line-height: 70px;
 }
 
 .content h2 {
@@ -24,10 +25,21 @@
 	text-decoration: underline;
 }
 
-.content p {
+.content p, .content li {
 	font-size: 21px;
 	line-height: 32px;
 	text-align: justify;
+}
+
+.content img {
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+}
+
+.content code {
+	background: var(--grey-color);
+	padding: 0 4px;
 }
 
 .content table {
@@ -77,4 +89,21 @@
 	padding: 10px 25px;
 	background-color: var(--background-highlight-color);
 	margin: 0;
+}
+
+@media (max-width: 768px) {
+	.content h1 {
+		font-size: 30px;
+		line-height: 37px;
+	}
+	
+	.content h2 {
+		font-size: 26px;
+		line-height: 32px;
+	}
+
+	.content p, .content li {
+		font-size: 18px;
+		line-height: 29px;
+	}
 }
