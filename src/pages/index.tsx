@@ -2,16 +2,26 @@ import React from 'react';
 import Head from 'next/head';
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 
+import About from '../components/home/about';
 import PostsCard from '../components/postsCard';
+import PresentationCode from '../components/home/presentationCode';
 import ProjectCard from '../components/projectCard';
 import Separator from '../components/separator';
 import Title from '../components/title';
-import PresentationCode from '../components/home/presentationCode';
-import About from '../components/home/about';
+
+import DefaultLayout from '../layouts/default';
 
 import { getPosts } from '../services/posts';
 import { getProjects } from '../services/projects';
-import DefaultLayout from '../layouts/default';
+
+const content: { [key: string]: Record<string, string> } = {
+	'en-US': {
+		projects: 'Projects'
+	},
+	'pt-BR': {
+		projects: 'Projetos'
+	}
+};
 
 export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
 	const projects = await getProjects(locale ?? '');
@@ -20,7 +30,8 @@ export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
 	return {
 		props: {
 			projects,
-			posts
+			posts,
+			locale: locale ?? ''
 		}
 	};
 };
@@ -37,7 +48,7 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 				<About />
 				<Separator />
 				<section>
-					<Title>Projects</Title>
+					<Title>{content[props.locale].projects}</Title>
 					<div className="row">
 						{props.projects?.map((project) => (
 							<ProjectCard
