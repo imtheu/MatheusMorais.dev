@@ -28,7 +28,7 @@ const Document = () => {
 				<meta property="og:site_name" content="MatheusMorais.dev" />
 				<meta property="og:type" content="website" />
 				<meta property="og:locale" content="pt_BR" />
-				<meta property="og:url" content="http://www.matheusmoraias.dev/" />
+				<meta property="og:url" content="http://www.matheusmorais.dev/" />
 			</Head>
 			<body>
 				<Main />
