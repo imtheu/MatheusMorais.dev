@@ -1,5 +1,6 @@
 import { MDXProvider } from '@mdx-js/react';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import Head from 'next/head';
 
 import ContentLayout from '../../layouts/contentLayout';
 
@@ -8,6 +9,7 @@ import Title from '../../components/title';
 import ContentTable from '../../components/contentTable';
 
 import { getAllProjects } from '../../services/projects';
+import { generateImage } from '../../lib/opengraph';
 
 const components = {
 	h1: Title,
@@ -15,8 +17,25 @@ const components = {
 	table: ContentTable
 };
 
-export const getStaticPaths: GetStaticPaths = () => {
-	const projects = getAllProjects();
+export const getStaticPaths: GetStaticPaths = async () => {
+	const projects = await getAllProjects();
+
+	if (process.env.GENERATE_IMAGES) {
+		projects.forEach((project) => {
+			try {
+				generateImage(
+					project.slug,
+					project.meta.title,
+					undefined,
+					project.language,
+					`/public/images/content/projects/${project.slug}`
+				);
+			} catch {
+				console.log(`OG Image not generated: ${project.slug}`);
+			}
+		});
+	}
+
 	return {
 		paths: projects.map((project) => {
 			return {
@@ -51,6 +70,13 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 	return (
 		<MDXProvider components={components}>
+			<Head>
+				<meta
+					property="og:image"
+					content={`/images/content/projects/${props.slug}/og_${props.locale}.png`}
+				/>
+				<meta property="og:image:type" content="image/png" />
+			</Head>
 			<ContentLayout meta={props.meta}>
 				<ContentComponent />
 			</ContentLayout>

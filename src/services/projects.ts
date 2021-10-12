@@ -44,13 +44,17 @@ export const getAllProjects = () => {
 	const languages = getLanguages();
 	const files = languages
 		.map((language) =>
-			getMarkdownFiles(language).map((file) => ({
-				file,
-				language,
-				slug: file.replace(/\.mdx?$/, '')
-			}))
+			getMarkdownFiles(language).map(async (file) => {
+				const mdx = await import(`../content/projects/${language}/${file}`);
+				return {
+					file,
+					language,
+					slug: file.replace(/\.mdx?$/, ''),
+					meta: mdx.meta
+				};
+			})
 		)
 		.flat();
 
-	return files;
+	return Promise.all(files);
 };

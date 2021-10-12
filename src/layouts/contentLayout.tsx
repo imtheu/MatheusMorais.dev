@@ -45,6 +45,9 @@ const ContentLayout = (props: PropsType) => {
 		<>
 			<Head>
 				<title>{props?.meta?.title} - MatheusMorais.dev</title>
+				<meta name="description" content={props?.meta?.description} />
+				<meta property="og:title" content={props?.meta?.title} />
+				<meta property="og:description" content={props?.meta?.description} />
 			</Head>
 			<Header />
 			<main className="container">
