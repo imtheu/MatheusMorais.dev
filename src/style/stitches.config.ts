@@ -14,6 +14,7 @@ export const { styled, getCssText, globalCss } = createStitches({
 			medium: '#A4ABBD',
 			mediumShade: '#9096a6',
 			light: '#D0D7EA',
+			lighter: '#f8f9fb',
 			white: '#FFFFFF',
 
 			parrotPink: '#D09EA8',

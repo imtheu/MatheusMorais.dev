@@ -6,7 +6,12 @@ import { ProjectMetaType } from '../types/Project';
 
 import Comments from '../components/comments';
 import Notification from '../components/notification';
-import Separator from '../components/separator';
+import Header from '../components/header';
+import Container from '../components/container';
+import Footer from '../components/footer';
+import Spacing from '../components/spacing';
+
+import * as Styled from './style';
 
 const languages = {
 	'en-US': 'English',
@@ -47,41 +52,48 @@ const ContentLayout = (props: PropsType) => {
 				<meta property="og:title" content={props?.meta?.title} />
 				<meta property="og:description" content={props?.meta?.description} />
 			</Head>
-			<main className="container">
-				{props.locales && props.locales.length > 1 ? (
-					<Notification>
+			<Container>
+				<Header />
+
+				<main>
+					{props.locales && props.locales.length > 1 ? (
+						<Notification>
+							<>
+								This post is also available in{' '}
+								{props.locales
+									.filter((locale) => locale !== props.locale)
+									.map((locale) => (
+										// eslint-disable-next-line jsx-a11y/anchor-is-valid
+										<a
+											key={locale}
+											onClick={(event) => toggleLanguage(event, locale)}
+											href="#"
+											className="color-grey-darker medium-weight"
+										>
+											{languages[locale as 'en-US' | 'pt-BR']}
+										</a>
+									))}
+							</>
+						</Notification>
+					) : null}
+					<Styled.Content>{props.children}</Styled.Content>
+
+					<Spacing size={6} multiplier={3} />
+
+					{props.comments ? (
 						<>
-							This post is also available in{' '}
-							{props.locales
-								.filter((locale) => locale !== props.locale)
-								.map((locale) => (
-									// eslint-disable-next-line jsx-a11y/anchor-is-valid
-									<a
-										key={locale}
-										onClick={(event) => toggleLanguage(event, locale)}
-										href="#"
-										className="color-grey-darker medium-weight"
-									>
-										{languages[locale as 'en-US' | 'pt-BR']}
-									</a>
-								))}
+							<Comments
+								url={props.comments.url}
+								identifier={props.comments.identifier}
+								language={props.comments.language}
+								title={props.comments.title}
+							/>
 						</>
-					</Notification>
-				) : null}
-				<div className="content">{props.children}</div>
-				<Separator />
-				{props.comments ? (
-					<>
-						<Comments
-							url={props.comments.url}
-							identifier={props.comments.identifier}
-							language={props.comments.language}
-							title={props.comments.title}
-						/>
-						<Separator />
-					</>
-				) : null}
-			</main>
+					) : null}
+				</main>
+			</Container>
+			<Spacing size={6} multiplier={2} />
+			<Footer />
 		</>
 	);
 };

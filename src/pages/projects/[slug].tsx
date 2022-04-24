@@ -4,18 +4,9 @@ import Head from 'next/head';
 
 import ContentLayout from '../../layouts/contentLayout';
 
-import Separator from '../../components/separator';
-import Title from '../../components/title';
-import ContentTable from '../../components/contentTable';
-
 import { getAllProjects } from '../../services/projects';
 import { generateImage } from '../../lib/opengraph';
-
-const components = {
-	h1: Title,
-	hr: Separator,
-	table: ContentTable
-};
+import { contentComponents } from '../../utils/content.utils';
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const projects = await getAllProjects();
@@ -69,7 +60,7 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 		require(`../../content/projects/${props.locale}/${props.slug}.mdx`).default;
 
 	return (
-		<MDXProvider components={components}>
+		<MDXProvider components={contentComponents}>
 			<Head>
 				<meta
 					property="og:image"
