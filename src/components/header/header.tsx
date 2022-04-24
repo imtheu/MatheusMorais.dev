@@ -38,20 +38,12 @@ const Header = () => {
 				<ul>
 					{/* eslint-disable jsx-a11y/anchor-is-valid */}
 					<li>
-						<a
-							onClick={(event) => toggleLanguage(event, 'en-US')}
-							href="#"
-							className="color-grey-darker medium-weight"
-						>
+						<a onClick={(event) => toggleLanguage(event, 'en-US')} href="#">
 							English
 						</a>
 					</li>
 					<li>
-						<a
-							onClick={(event) => toggleLanguage(event, 'pt-BR')}
-							href="#"
-							className="color-grey-darker medium-weight"
-						>
+						<a onClick={(event) => toggleLanguage(event, 'pt-BR')} href="#">
 							Português
 						</a>
 					</li>

@@ -68,7 +68,6 @@ const ContentLayout = (props: PropsType) => {
 											key={locale}
 											onClick={(event) => toggleLanguage(event, locale)}
 											href="#"
-											className="color-grey-darker medium-weight"
 										>
 											{languages[locale as 'en-US' | 'pt-BR']}
 										</a>
