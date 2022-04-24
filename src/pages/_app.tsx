@@ -1,7 +1,8 @@
 import { NextComponentType, NextPageContext } from 'next';
 import type { AppProps } from 'next/app';
 
-import '../styles/globals.css';
+import 'normalize.css';
+import global from '../style/global';
 
 const App = ({
 	Component,
@@ -15,6 +16,8 @@ const App = ({
 		layout: React.FunctionComponent;
 	};
 }) => {
+	global();
+
 	return Component.layout ? (
 		<Component.layout>
 			<Component {...pageProps} />

@@ -5,8 +5,6 @@ import { useRouter } from 'next/router';
 import { ProjectMetaType } from '../types/Project';
 
 import Comments from '../components/comments';
-import Footer from '../components/footer';
-import Header from '../components/header';
 import Notification from '../components/notification';
 import Separator from '../components/separator';
 
@@ -49,7 +47,6 @@ const ContentLayout = (props: PropsType) => {
 				<meta property="og:title" content={props?.meta?.title} />
 				<meta property="og:description" content={props?.meta?.description} />
 			</Head>
-			<Header />
 			<main className="container">
 				{props.locales && props.locales.length > 1 ? (
 					<Notification>
@@ -85,7 +82,6 @@ const ContentLayout = (props: PropsType) => {
 					</>
 				) : null}
 			</main>
-			<Footer />
 		</>
 	);
 };

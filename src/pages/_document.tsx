@@ -1,5 +1,6 @@
 import React from 'react';
 import { Html, Head, Main, NextScript } from 'next/document';
+import { getCssText } from '../style/stitches.config';
 
 const Document = () => {
 	return (
@@ -29,6 +30,11 @@ const Document = () => {
 				<meta property="og:type" content="website" />
 				<meta property="og:locale" content="pt_BR" />
 				<meta property="og:url" content="http://www.matheusmorais.dev/" />
+
+				<style
+					id="stitches"
+					dangerouslySetInnerHTML={{ __html: getCssText() }}
+				/>
 			</Head>
 			<body>
 				<Main />

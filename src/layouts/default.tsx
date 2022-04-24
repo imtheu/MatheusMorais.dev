@@ -1,18 +1,19 @@
 import React from 'react';
 
+import Container from '../components/container';
 import Header from '../components/header';
+import Spacing from '../components/spacing';
 import Footer from '../components/footer';
-import Separator from '../components/separator';
 
-const DefaultLayout = (props: { children: JSX.Element }) => {
-	return (
-		<>
+const DefaultLayout = ({ children }: { children: JSX.Element }) => (
+	<>
+		<Container>
 			<Header />
-			<main className="container">{props.children}</main>
-			<Separator />
-			<Footer />
-		</>
-	);
-};
+			<Spacing size={6} />
+			<main>{children}</main>
+		</Container>
+		<Footer />
+	</>
+);
 
 export default DefaultLayout;

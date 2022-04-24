@@ -1,54 +1,59 @@
 import React from 'react';
 import useI18N from '../../../hooks/useI18N';
-
+import Grid from '../../grid';
+import Memoji from '../../memoji';
 import Title from '../../title';
+import Text from '../../text';
+import Spacing from '../../spacing';
 
 const content: { [key: string]: Record<string, string | JSX.Element> } = {
 	'en-US': {
 		title: 'About',
 		description: (
-			<>
-				I’m Matheus, i’ve been working for 10 years with{' '}
-				<strong className="color-primary">web development</strong> and I’m a
-				front-end developer at{' '}
+			<Text tag="p" size={3} align="justify">
+				I{'’'}m Matheus, i’ve been working for ~10 years with web development
+				and I’m a front-end developer at{' '}
 				<a
 					href="https://letras.mus.br"
 					target="_blank"
 					rel="noopener noreferrer"
-					className="color-secondary"
 				>
 					Letras.mus.br
 				</a>
-				.
 				<br />
 				<br />
-				Brazilian, I’m about to graduate in computer science.
-			</>
-		),
-		buttonText: 'Download my CV'
+				<strong>I love writing, learning and teaching</strong>. And I love
+				technology, too. That
+				{"'"}s why I created this little corner of the internet.
+				<br />
+				<br />
+				Brazilian, I{"'"}m about to graduate in computer science.
+			</Text>
+		)
 	},
 	'pt-BR': {
 		title: 'Sobre',
 		description: (
-			<>
-				Sou o Matheus, trabalho por cerca de 10 anos com{' '}
-				<strong className="color-primary">desenvolvimento web</strong> e sou
+			<Text tag="p" size={3} align="justify">
+				Sou o Matheus, trabalho por ~10 anos com desenvolvimento web e sou
 				desenvolvedor front-end no{' '}
 				<a
 					href="https://letras.mus.br"
 					target="_blank"
 					rel="noopener noreferrer"
-					className="color-secondary"
 				>
 					Letras.mus.br
 				</a>
-				.
 				<br />
 				<br />
-				Brasileiro, estou me formando em ciência da computação.
-			</>
-		),
-		buttonText: 'Baixe meu currículo'
+				<strong>Amo escrever, aprender e ensinar</strong>. E amo tecnologia. É
+				por isso que criei esse pequeno canto da internet.
+				<br />
+				<br />
+				Sou de <span title="Como todo bom Contagense">Belo Horizonte</span> e
+				estou me formando em Ciência da Computação.
+			</Text>
+		)
 	}
 };
 
@@ -56,12 +61,20 @@ const About = () => {
 	const { locale } = useI18N();
 
 	return (
-		<section>
-			<Title>{content[locale].title as string}</Title>
-			<p className="subtitle col-9">{content[locale].description}</p>
-			<a href="/" className="button">
-				{content[locale].buttonText}
-			</a>
+		<section id="about-aos-section">
+			<Title branding>{content[locale].title as string}</Title>
+			<Spacing size={4} />
+			<Grid>
+				<Grid.Item size={7} tabletSize={12} mobileSize={12}>
+					{content[locale].description}
+				</Grid.Item>
+				<Grid.Item size={5} tabletSize={12} mobileSize={12}>
+					<>
+						<Spacing tabletSize={5} mobileSize={6} />
+						<Memoji />
+					</>
+				</Grid.Item>
+			</Grid>
 		</section>
 	);
 };
