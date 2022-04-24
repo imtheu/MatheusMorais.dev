@@ -2,7 +2,7 @@ import { NextComponentType, NextPageContext } from 'next';
 import type { AppProps } from 'next/app';
 
 import 'normalize.css';
-import global from '../style/global';
+import global from 'style/global';
 
 const App = ({
 	Component,

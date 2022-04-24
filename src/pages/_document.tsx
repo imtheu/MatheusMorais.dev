@@ -1,6 +1,7 @@
 import React from 'react';
 import { Html, Head, Main, NextScript } from 'next/document';
-import { getCssText } from '../style/stitches.config';
+
+import { getCssText } from 'style/stitches.config';
 
 const Document = () => {
 	return (

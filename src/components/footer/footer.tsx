@@ -1,12 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Container from '../container';
-import Spacing from '../spacing';
-import Text from '../text';
+
+import Container from 'components/container';
+import Spacing from 'components/spacing';
+import Text from 'components/text';
+import Grid from 'components/grid';
 
 import * as Styled from './style';
-import Grid from '../grid';
 
 const Footer = () => {
 	return (

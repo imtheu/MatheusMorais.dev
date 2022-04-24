@@ -2,16 +2,16 @@ import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { ProjectMetaType } from '../types/Project';
-
-import Comments from '../components/comments';
-import Notification from '../components/notification';
-import Header from '../components/header';
-import Container from '../components/container';
-import Footer from '../components/footer';
-import Spacing from '../components/spacing';
+import Comments from 'components/comments';
+import Notification from 'components/notification';
+import Header from 'components/header';
+import Container from 'components/container';
+import Footer from 'components/footer';
+import Spacing from 'components/spacing';
 
 import * as Styled from './style';
+
+import { ProjectMetaType } from 'types/Project';
 
 const languages = {
 	'en-US': 'English',

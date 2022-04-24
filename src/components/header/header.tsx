@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import Spacing from '../spacing';
+import Spacing from 'components/spacing';
 
 import * as Styled from './style';
 

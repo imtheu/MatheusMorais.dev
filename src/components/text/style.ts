@@ -1,4 +1,4 @@
-import { styled } from '../../style/stitches.config';
+import { styled } from 'style/stitches.config';
 
 export const Text = styled('span', {
 	color: '$dark',

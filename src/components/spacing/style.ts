@@ -1,5 +1,6 @@
 import { CSS } from '@stitches/react';
-import { styled } from '../../style/stitches.config';
+
+import { styled } from 'style/stitches.config';
 
 const generateSpacingVariants = (viewport: 'desktop' | 'tablet' | 'mobile') => {
 	const spacingVariants = 6;

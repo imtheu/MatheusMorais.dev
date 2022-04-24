@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react';
-import Head from 'next/head';
-import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import AOS from 'aos';
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
+import Head from 'next/head';
+import React, { useEffect } from 'react';
 
-import About from '../components/home/about';
-import PresentationCode from '../components/home/presentationCode';
-import ProjectCard from '../components/projectCard';
+import Spacing from 'components/spacing';
+import Title from 'components/title';
+import PostCard from 'components/postCard';
+import About from 'components/home/about';
+import PresentationCode from 'components/home/presentationCode';
+import ProjectCard from 'components/projectCard';
 
-import DefaultLayout from '../layouts/default';
+import DefaultLayout from 'layouts/default';
 
-import { getPosts } from '../services/posts';
-import { getProjects } from '../services/projects';
+import { getPosts } from 'services/posts';
+import { getProjects } from 'services/projects';
 
 import 'aos/dist/aos.css';
-import Spacing from '../components/spacing';
-import Title from '../components/title';
-import PostCard from '../components/postCard';
 
 const content: { [key: string]: Record<string, string> } = {
 	'en-US': {

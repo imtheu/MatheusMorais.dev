@@ -1,4 +1,4 @@
-import { styled } from '../style/stitches.config';
+import { styled } from 'style/stitches.config';
 
 export const Content = styled('div', {
 	a: {

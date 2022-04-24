@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import React from 'react';
-import useI18N from '../../hooks/useI18N';
-import Button from '../button';
-import Spacing from '../spacing';
-import Text from '../text';
-import Title from '../title';
+
+import Button from 'components/button';
+import Spacing from 'components/spacing';
+import Text from 'components/text';
+import Title from 'components/title';
+
+import useI18N from 'hooks/useI18N';
 
 type PropsType = {
 	title: string;

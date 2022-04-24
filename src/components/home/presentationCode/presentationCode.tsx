@@ -1,8 +1,9 @@
 import React from 'react';
 import Typewriter from 'typewriter-effect';
 
-import useI18N from '../../../hooks/useI18N';
-import Text from '../../text';
+import Text from 'components/text';
+
+import useI18N from 'hooks/useI18N';
 
 import * as Styled from './style';
 

@@ -1,6 +1,6 @@
 import React, { ComponentProps, PropsWithChildren } from 'react';
 
-import Text from '../text';
+import Text from 'components/text';
 
 import * as Styled from './style';
 

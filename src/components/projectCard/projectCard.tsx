@@ -1,14 +1,16 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import useI18N from '../../hooks/useI18N';
-import Grid from '../grid';
-import Title from '../title';
-import Text from '../text';
-import Spacing from '../spacing';
+
+import Grid from 'components/grid';
+import Title from 'components/title';
+import Text from 'components/text';
+import Spacing from 'components/spacing';
+import Button from 'components/button';
+
+import useI18N from 'hooks/useI18N';
 
 import * as Styled from './style';
-import Button from '../button';
 
 type PropsType = {
 	title: string;

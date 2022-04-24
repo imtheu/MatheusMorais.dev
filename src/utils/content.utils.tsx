@@ -1,8 +1,8 @@
 import { MDXProviderComponents } from '@mdx-js/react';
-import CodeBlock from '../components/codeblock';
-import ContentTable from '../components/contentTable';
-import Spacing from '../components/spacing';
-import Title from '../components/title';
+import CodeBlock from 'components/codeblock';
+import ContentTable from 'components/contentTable';
+import Spacing from 'components/spacing';
+import Title from 'components/title';
 
 export const contentComponents: MDXProviderComponents = {
 	h1: ({ children }) => (

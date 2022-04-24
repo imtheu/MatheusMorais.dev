@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
-import Spacing from '../spacing';
-import Text from '../text';
+
+import Spacing from 'components/spacing';
+import Text from 'components/text';
 
 import * as Styled from './style';
 

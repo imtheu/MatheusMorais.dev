@@ -1,10 +1,12 @@
 import React from 'react';
-import useI18N from '../../../hooks/useI18N';
-import Grid from '../../grid';
-import Memoji from '../../memoji';
-import Title from '../../title';
-import Text from '../../text';
-import Spacing from '../../spacing';
+
+import Grid from 'components/grid';
+import Memoji from 'components/memoji';
+import Title from 'components/title';
+import Text from 'components/text';
+import Spacing from 'components/spacing';
+
+import useI18N from 'hooks/useI18N';
 
 const content: { [key: string]: Record<string, string | JSX.Element> } = {
 	'en-US': {

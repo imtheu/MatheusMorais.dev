@@ -1,13 +1,13 @@
-import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import React from 'react';
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 
-import PostCard from '../../components/postCard';
-import Spacing from '../../components/spacing';
-import Title from '../../components/title';
+import PostCard from 'components/postCard';
+import Spacing from 'components/spacing';
+import Title from 'components/title';
 
-import DefaultLayout from '../../layouts/default';
+import DefaultLayout from 'layouts/default';
 
-import { getPosts } from '../../services/posts';
+import { getPosts } from 'services/posts';
 
 export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
 	const posts = await getPosts(locale ?? '');

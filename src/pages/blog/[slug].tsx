@@ -2,11 +2,12 @@ import { MDXProvider } from '@mdx-js/react';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 
-import ContentLayout from '../../layouts/contentLayout';
+import ContentLayout from 'layouts/contentLayout';
+import { contentComponents } from 'utils/content.utils';
 
-import { getAllPosts, getPostLanguages } from '../../services/posts';
-import { generateImage } from '../../lib/opengraph';
-import { contentComponents } from '../../utils/content.utils';
+import { generateImage } from 'lib/opengraph';
+
+import { getAllPosts, getPostLanguages } from 'services/posts';
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const posts = await getAllPosts();

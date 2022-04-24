@@ -1,5 +1,6 @@
 import { keyframes } from '@stitches/react';
-import { styled } from '../../style/stitches.config';
+
+import { styled } from 'style/stitches.config';
 
 const huhuZoomInRight = keyframes({
 	'50%': { transform: 'translateY(5px) translateX(4px)' }
