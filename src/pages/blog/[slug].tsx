@@ -2,22 +2,12 @@ import { MDXProvider } from '@mdx-js/react';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 
-import ContentLayout from '../../layouts/contentLayout';
+import ContentLayout from 'layouts/contentLayout';
+import { contentComponents } from 'utils/content.utils';
 
-import CodeBlock from '../../components/codeblock';
-import ContentTable from '../../components/contentTable';
-import Separator from '../../components/separator';
-import Title from '../../components/title';
+import { generateImage } from 'lib/opengraph';
 
-import { getAllPosts, getPostLanguages } from '../../services/posts';
-import { generateImage } from '../../lib/opengraph';
-
-const components = {
-	h1: Title,
-	hr: Separator,
-	table: ContentTable,
-	code: CodeBlock
-};
+import { getAllPosts, getPostLanguages } from 'services/posts';
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const posts = await getAllPosts();
@@ -93,7 +83,7 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 	}
 
 	return (
-		<MDXProvider components={components}>
+		<MDXProvider components={contentComponents}>
 			<Head>
 				<meta
 					property="og:image"

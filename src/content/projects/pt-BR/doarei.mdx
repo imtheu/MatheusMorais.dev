@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Grid from 'components/grid';
 
 export const meta = {
 	title: 'Doarei',
@@ -31,23 +32,22 @@ Bem otimizado para motores de busca e com uma rápida adesão do público-alvo, 
 
 O Doarei foi desenvolvido enquanto eu ainda estava estudando desenvolvimento web. Embora não fosse visualmente atrativo, foi um dos trabalhos do qual eu mais me orgulho.
 
-<div className="row">
-	<div className="col-6">
+<Grid>
+	<Grid.Item size={6}>
 		<Image
 			src="/images/content/projects/doarei/doarei_print.png"
 			width="536"
 			height="262"
 		/>
-	</div>
-	<div className="col-6">
+	</Grid.Item>
+	<Grid.Item size={6}>
 		<Image
 			src="/images/content/projects/doarei/doarei_print2.png"
 			width="640"
 			height="308"
 		/>
-	</div>
-</div>
-
+	</Grid.Item>
+</Grid>
 A stack de desenvolvimento foi:
 
 | Desenvolvimento | DevOps    | Estrutura                | Outras tecnologias |
@@ -65,22 +65,22 @@ A stack de desenvolvimento foi:
 
 Rapidamente o Doarei precisou de mais dedicação e planejamento, significando que precisaria de uma atualização em suas tecnologias, melhorias para transformar o código em algo mais sustentável, além das melhorias em performance, acessibilidade, usablidade e SEO.
 
-<div className="row">
-	<div className="col-6">
+<Grid>
+	<Grid.Item size={6}>
 		<Image
 			src="/images/content/projects/doarei/doarei_print3.png"
 			width="536"
 			height="262"
 		/>
-	</div>
-	<div className="col-6">
+	</Grid.Item>
+	<Grid.Item size={6}>
 		<Image
 			src="/images/content/projects/doarei/doarei_print4.png"
 			width="640"
 			height="308"
 		/>
-	</div>
-</div>
+	</Grid.Item>
+</Grid>
 
 A stack de desenvolvimento foi:
 
@@ -100,4 +100,10 @@ Isso foi o que um de nossos usuários nos disse:
 
 > “Acho um trabalho lindo. Não pensam só em si, pensam também no próximo. Mais pessoas deveriam ter esse coração.”
 
-É isso que me faz amar a programação. Você pode acessar o Doarei no <a href="https://www.doarei.com.br" rel="noopener noreferrer" target="_blank">www.doarei.com.br</a>.
+<p>
+	É isso que me faz amar a programação. Você pode acessar o Doarei no{' '}
+	<a href="https://www.doarei.com.br" rel="noopener noreferrer" target="_blank">
+		www.doarei.com.br
+	</a>
+	.
+</p>

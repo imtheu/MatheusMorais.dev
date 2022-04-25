@@ -18,7 +18,12 @@ module.exports = {
 		amd: true,
 		node: true
 	},
-	plugins: ['@typescript-eslint', 'react', 'react-hooks'],
+	plugins: [
+		'@typescript-eslint',
+		'react',
+		'react-hooks',
+		'eslint-plugin-import-helpers'
+	],
 	extends: [
 		'eslint:recommended',
 		'plugin:react/recommended',
@@ -26,7 +31,8 @@ module.exports = {
 		'plugin:jsx-a11y/recommended',
 		'plugin:@typescript-eslint/eslint-recommended',
 		'plugin:@typescript-eslint/recommended',
-		'prettier'
+		'prettier',
+		'plugin:@next/next/recommended'
 	],
 	rules: {
 		'no-magic-numbers': ['error', { ignore: [0, 1, -1] }],
@@ -41,6 +47,25 @@ module.exports = {
 				aspects: ['invalidHref', 'preferButton']
 			}
 		],
-		'react/prop-types': 0
+		'react/prop-types': 0,
+		'import-helpers/order-imports': [
+			'error',
+			{
+				groups: [
+					'module',
+					'/components/',
+					'/content/',
+					'/hooks/',
+					'/layouts/',
+					'/lib/',
+					'/services/',
+					'/style/',
+					'/types/',
+					'/utils/'
+				],
+				newlinesBetween: 'always'
+			}
+		],
+		'no-multiple-empty-lines': 1
 	}
 };

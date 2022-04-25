@@ -1,9 +1,18 @@
 import React, { PropsWithChildren } from 'react';
 
-import styles from './notification.module.css';
+import Spacing from 'components/spacing';
+import Text from 'components/text';
+
+import * as Styled from './style';
 
 const Notification = (props: PropsWithChildren<unknown>) => (
-	<section className={styles.notification}>{props.children}</section>
+	<>
+		<Spacing size={5} />
+		<Styled.Notification>
+			<Text>{props.children}</Text>
+		</Styled.Notification>
+		<Spacing size={5} />
+	</>
 );
 
 export default Notification;

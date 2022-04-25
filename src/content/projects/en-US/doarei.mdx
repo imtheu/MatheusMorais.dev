@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Grid from 'components/grid';
 
 export const meta = {
 	title: 'Doarei',
@@ -31,22 +32,22 @@ Well-optimized for search engines and with a quick adhesion of the target audien
 
 Doarei was developed while I was still studying web development. Although it's not as visually attractive, it's one of the jobs I'm most proud of.
 
-<div className="row">
-	<div className="col-6">
+<Grid>
+	<Grid.Item size={6}>
 		<Image
 			src="/images/content/projects/doarei/doarei_print.png"
 			width="536"
 			height="262"
 		/>
-	</div>
-	<div className="col-6">
+	</Grid.Item>
+	<Grid.Item size={6}>
 		<Image
 			src="/images/content/projects/doarei/doarei_print2.png"
 			width="640"
 			height="308"
 		/>
-	</div>
-</div>
+	</Grid.Item>
+</Grid>
 
 The development stack was:
 
@@ -65,22 +66,22 @@ The development stack was:
 
 Quickly, Doarei needed more care as well, meaning that it also needed an update in its technologies, improvements to make the code more maintainable, in addition to improvements in performance, accessibility, usability and SEO.
 
-<div className="row">
-	<div className="col-6">
+<Grid>
+	<Grid.Item size={6}>
 		<Image
 			src="/images/content/projects/doarei/doarei_print3.png"
 			width="536"
 			height="262"
 		/>
-	</div>
-	<div className="col-6">
+	</Grid.Item>
+	<Grid.Item size={6}>
 		<Image
 			src="/images/content/projects/doarei/doarei_print4.png"
 			width="640"
 			height="308"
 		/>
-	</div>
-</div>
+	</Grid.Item>
+</Grid>
 
 The development stack was:
 
@@ -102,4 +103,10 @@ This is what one of our users told us:
 >
 > (I think it's a beautiful job. They don't just think about themselves, they also think about others. More people should have that heart.)
 
-That's what makes me love programming. You can access Doarei at <a href="https://www.doarei.com.br" rel="noopener noreferrer" target="_blank">www.doarei.com.br</a>.
+<p>
+	That's what makes me love programming. You can access Doarei at{' '}
+	<a href="https://www.doarei.com.br" rel="noopener noreferrer" target="_blank">
+		www.doarei.com.br
+	</a>
+	.
+</p>

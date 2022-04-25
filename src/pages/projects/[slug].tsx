@@ -2,20 +2,12 @@ import { MDXProvider } from '@mdx-js/react';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 
-import ContentLayout from '../../layouts/contentLayout';
+import ContentLayout from 'layouts/contentLayout';
+import { contentComponents } from 'utils/content.utils';
 
-import Separator from '../../components/separator';
-import Title from '../../components/title';
-import ContentTable from '../../components/contentTable';
+import { generateImage } from 'lib/opengraph';
 
-import { getAllProjects } from '../../services/projects';
-import { generateImage } from '../../lib/opengraph';
-
-const components = {
-	h1: Title,
-	hr: Separator,
-	table: ContentTable
-};
+import { getAllProjects } from 'services/projects';
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const projects = await getAllProjects();
@@ -69,7 +61,7 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 		require(`../../content/projects/${props.locale}/${props.slug}.mdx`).default;
 
 	return (
-		<MDXProvider components={components}>
+		<MDXProvider components={contentComponents}>
 			<Head>
 				<meta
 					property="og:image"
