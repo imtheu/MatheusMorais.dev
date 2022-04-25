@@ -7,7 +7,7 @@ This is my personal corner on the web.
 - Portfolio + Blog
 - Next.js project running on Vercel with:
   - Typescript
-  - CSS / CSS Modules
+  - Stitches
   - MDX
 
 Available in EN and PT-BR
