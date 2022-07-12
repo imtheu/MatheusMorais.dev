@@ -89,7 +89,7 @@ const Project = ({
 			// eslint-disable-next-line @typescript-eslint/no-var-requires
 			require(`../../content/projects/${slug}/${locale}.mdx`).default;
 	} catch {
-		return <></>;
+		return null;
 	}
 
 	return (

@@ -2,7 +2,7 @@ import { PostMetaFile } from 'src/types/Post';
 
 export const Metadata: PostMetaFile = {
 	['pt-BR']: {
-		slug: 'cursos_quarentena',
+		slug: 'cursos-quarentena',
 		title:
 			'Cursos, sites e desafios para estudar programação e tecnologia na quarentena',
 		author: 'Matheus Francisco',

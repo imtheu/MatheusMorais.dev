@@ -5,7 +5,7 @@ import {
 	InferGetStaticPropsType
 } from 'next';
 import Head from 'next/head';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import ContentLayout from 'layouts/contentLayout';
 import { contentComponents } from 'utils/content.utils';
@@ -82,14 +82,30 @@ const Project = ({
 	locale
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const ContentComponent = useRef<MDXContent>();
+
+	useEffect(() => {
+		const external = meta?.[locale ?? '']?.external;
+		if (external) {
+			window.location.assign(external);
+		}
+	}, [locale, meta]);
+
+	if (!meta) {
+		return null;
+	}
+
 	const metadata = meta[locale ?? ''];
+
+	if (metadata.external) {
+		return null;
+	}
 
 	try {
 		ContentComponent.current =
 			// eslint-disable-next-line @typescript-eslint/no-var-requires
 			require(`../../content/posts/${slug}/${locale}.mdx`).default;
 	} catch {
-		return <></>;
+		return null;
 	}
 
 	return (
