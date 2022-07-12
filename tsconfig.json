@@ -22,7 +22,6 @@
 			"lib/*": ["src/lib/*"],
 			"services/*": ["src/services/*"],
 			"style/*": ["src/style/*"],
-			"types/*": ["src/types/*"],
 			"utils/*": ["src/utils/*"]
 		}
 	},

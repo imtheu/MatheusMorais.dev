@@ -4,7 +4,6 @@ import { createCanvas, registerFont, loadImage } from 'canvas';
 import fs from 'fs';
 
 export const generateImage = (
-	slug: string,
 	titleText: string,
 	date: string | undefined,
 	locale: string,
@@ -27,11 +26,8 @@ export const generateImage = (
 		size: 18
 	};
 
-	registerFont('./public/fonts/Poppins/Poppins-Medium.ttf', {
-		family: 'Poppins Medium'
-	});
-	registerFont('./public/fonts/Poppins/Poppins-Regular.ttf', {
-		family: 'Poppins Regular'
+	registerFont('./public/fonts/Inter/Inter.ttf', {
+		family: 'Inter'
 	});
 
 	const getLines = (text: string, maxWidth: number) => {
@@ -62,7 +58,7 @@ export const generateImage = (
 
 	context.textBaseline = 'top';
 	context.fillStyle = '#0F111A';
-	context.font = '48px "Poppins Medium"';
+	context.font = '48px "Inter"';
 
 	getLines(titleText, title.width).forEach((line, i) => {
 		context.fillText(
@@ -74,7 +70,7 @@ export const generateImage = (
 	});
 
 	context.fillStyle = '#0F111A';
-	context.font = `${text.size}px "Poppins Regular"`;
+	context.font = `${text.size}px "Inter"`;
 	if (date) {
 		context.fillText(
 			`Matheus Francisco (@imtheu) • ${new Date(date).toLocaleDateString(
@@ -92,13 +88,13 @@ export const generateImage = (
 		context.fillText('Matheus Francisco (@imtheu)', 201, 424);
 	}
 
-	context.font = `${text.size}px "Poppins Medium"`;
+	context.font = `${text.size}px "Inter"`;
 	context.fillStyle = '#06D6A0';
 	context.fillText('matheusmorais', 201, 454);
 	context.fillStyle = '#0F111A';
-	context.fillText('.', 348, 454);
+	context.fillText('.', 332, 454);
 	context.fillStyle = '#E4B64B';
-	context.fillText('dev', 353, 454);
+	context.fillText('dev', 336, 454);
 
 	loadImage('./public/images/favicons/96x96.png').then((image) => {
 		context.drawImage(image, 996, 398, 96, 96);

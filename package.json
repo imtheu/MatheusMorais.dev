@@ -17,6 +17,7 @@
 		"@mdx-js/loader": "^1.6.22",
 		"@next/mdx": "^11.1.2",
 		"@stitches/react": "^1.2.7",
+		"@types/mdx": "^2.0.2",
 		"aos": "^3.0.0-beta.6",
 		"canvas": "^2.8.0",
 		"disqus-react": "^1.1.2",
