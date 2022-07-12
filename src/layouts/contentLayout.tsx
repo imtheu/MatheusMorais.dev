@@ -11,7 +11,8 @@ import Spacing from 'components/spacing';
 
 import * as Styled from './style';
 
-import { ProjectMetaType } from 'types/Project';
+import { ProjectMetaType } from 'src/types/Project';
+import { PostMetaType } from 'src/types/Post';
 
 const languages = {
 	'en-US': 'English',
@@ -20,7 +21,7 @@ const languages = {
 
 type PropsType = {
 	children: JSX.Element;
-	meta?: ProjectMetaType;
+	meta?: ProjectMetaType | PostMetaType;
 	comments?:
 		| {
 				url: string;
