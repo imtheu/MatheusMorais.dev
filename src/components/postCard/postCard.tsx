@@ -12,7 +12,7 @@ type PropsType = {
 	title: string;
 	content: string;
 	url: string;
-	external: boolean;
+	external?: string;
 	date: Date;
 };
 

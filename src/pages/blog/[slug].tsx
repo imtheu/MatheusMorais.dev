@@ -1,83 +1,93 @@
 import { MDXProvider } from '@mdx-js/react';
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import {
+	GetStaticPaths,
+	GetStaticPropsContext,
+	InferGetStaticPropsType
+} from 'next';
 import Head from 'next/head';
+import { useRef } from 'react';
 
 import ContentLayout from 'layouts/contentLayout';
 import { contentComponents } from 'utils/content.utils';
 
 import { generateImage } from 'lib/opengraph';
 
-import { getAllPosts, getPostLanguages } from 'services/posts';
+import {
+	ContentDirectories,
+	get,
+	getContentMetadata
+} from 'utils/services.utils';
+
+import { MDXContent } from 'mdx/types';
+import { PostMetaFile } from 'src/types/Post';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const posts = await getAllPosts();
+	const posts = await getContentMetadata<PostMetaFile>(
+		ContentDirectories.Posts
+	);
 
 	if (process.env.GENERATE_IMAGES) {
-		posts.forEach((post) => {
-			if (post.meta.externalLink) {
-				return;
-			}
-
-			try {
-				generateImage(
-					post.slug,
-					post.meta.title,
-					post.meta.date,
-					post.language,
-					`/public/images/content/posts/${post.slug}`
-				);
-			} catch {
-				console.log(`OG Image not generated: ${post.slug}`);
-			}
-		});
+		posts.forEach((post) =>
+			Object.keys(post).forEach((language) => {
+				const metadata = post[language];
+				try {
+					generateImage(
+						metadata.title,
+						metadata.date,
+						language,
+						`/public/images/content/posts/${metadata.slug}`
+					);
+				} catch (e) {
+					console.log(`OG Image not generated: ${metadata.slug}`, e);
+				}
+			})
+		);
 	}
 
+	const paths = posts.flatMap((post) =>
+		Object.keys(post).map((language) => ({
+			params: {
+				slug: post[language].slug
+			},
+			locale: language
+		}))
+	);
+
 	return {
-		paths: posts.map((post) => {
-			return {
-				params: {
-					slug: post.slug
-				},
-				locale: post.language
-			};
-		}),
+		paths,
 		fallback: true
 	};
 };
 
-export const getStaticProps: GetStaticProps = ({ locale, params }) => {
-	const postLanguages = getPostLanguages((params?.slug as string) ?? '');
-
-	if (!postLanguages.includes(locale ?? '')) {
-		return {
-			redirect: {
-				destination: `/${postLanguages[0]}/blog/${params?.slug}`,
-				permanent: false
-			}
-		};
-	}
-
-	const meta =
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		require(`../../content/posts/${locale}/${params?.slug}.mdx`).meta;
+export const getStaticProps = async ({
+	locale,
+	params
+}: GetStaticPropsContext) => {
+	const { meta } = await get<PostMetaFile>(ContentDirectories.Posts, {
+		slug: (params?.slug as string) ?? ''
+	});
 
 	return {
 		props: {
 			meta,
-			locale,
 			slug: params?.slug ?? '',
-			locales: postLanguages
+			locale
 		}
 	};
 };
 
-const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-	let ContentComponent;
+const Project = ({
+	meta,
+	slug,
+	locale
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+	const ContentComponent = useRef<MDXContent>();
+	const metadata = meta[locale ?? ''];
 
 	try {
-		ContentComponent =
+		ContentComponent.current =
 			// eslint-disable-next-line @typescript-eslint/no-var-requires
-			require(`../../content/posts/${props.locale}/${props.slug}.mdx`).default;
+			require(`../../content/posts/${slug}/${locale}.mdx`).default;
 	} catch {
 		return <></>;
 	}
@@ -87,22 +97,22 @@ const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<Head>
 				<meta
 					property="og:image"
-					content={`/images/content/posts/${props.slug}/og_${props.locale}.png`}
+					content={`/images/content/posts/${slug}/og_${locale}.png`}
 				/>
 				<meta property="og:image:type" content="image/png" />
 			</Head>
 			<ContentLayout
-				meta={props.meta}
+				meta={metadata}
 				comments={{
-					title: props.meta?.title,
-					identifier: `post_${props.slug}`,
-					language: props.locale.replace('-', '_'),
-					url: `https://matheusmorais.dev/blog/${props.slug}`
+					title: metadata.title,
+					identifier: `post_${slug}`,
+					language: locale?.replace('-', '_') ?? '',
+					url: `https://matheusmorais.dev/blog/${slug}`
 				}}
-				locale={props.locale}
-				locales={props.locales}
+				locale={locale}
+				locales={Object.keys(meta)}
 			>
-				<>{ContentComponent ? <ContentComponent /> : null}</>
+				<>{ContentComponent.current ? <ContentComponent.current /> : null}</>
 			</ContentLayout>
 		</MDXProvider>
 	);

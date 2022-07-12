@@ -12,10 +12,15 @@ import ProjectCard from 'components/projectCard';
 
 import DefaultLayout from 'layouts/default';
 
-import { getPosts } from 'services/posts';
-import { getProjects } from 'services/projects';
-
 import 'aos/dist/aos.css';
+import {
+	ContentDirectories,
+	getContentMetadata,
+	Languages
+} from 'utils/services.utils';
+
+import { PostMetaFile } from 'src/types/Post';
+import { ProjectMetaFile } from 'src/types/Project';
 
 const content: { [key: string]: Record<string, string> } = {
 	'en-US': {
@@ -26,15 +31,22 @@ const content: { [key: string]: Record<string, string> } = {
 	}
 };
 
-export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
-	const projects = await getProjects(locale ?? '');
-	const posts = await getPosts(locale ?? '');
+export const getStaticProps = async ({
+	locale = Languages.EN_US
+}: GetStaticPropsContext) => {
+	const posts = await getContentMetadata<PostMetaFile>(
+		ContentDirectories.Posts
+	);
+
+	const projects = await getContentMetadata<ProjectMetaFile>(
+		ContentDirectories.Projects
+	);
 
 	return {
 		props: {
 			projects,
 			posts,
-			locale: locale ?? ''
+			locale: (locale as Languages) ?? ''
 		}
 	};
 };
@@ -62,15 +74,23 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<section>
 				<Title branding>{content[props.locale].projects}</Title>
 				<Spacing size={4} />
-				{props.projects?.map((project) => (
-					<ProjectCard
-						key={project.slug}
-						title={project.meta.title}
-						content={project.meta.description}
-						imageSrc={project.meta.thumbnail}
-						url={project.url}
-					/>
-				))}
+				{props.projects?.map((project) => {
+					const metadata = project[props.locale];
+
+					if (!metadata) {
+						return null;
+					}
+
+					return (
+						<ProjectCard
+							key={metadata.slug}
+							title={metadata.title}
+							content={metadata.description}
+							imageSrc={metadata.thumbnail}
+							url={`/${props.locale}/projects/${metadata.slug}`}
+						/>
+					);
+				})}
 			</section>
 
 			<Spacing size={6} multiplier={3} />
@@ -78,16 +98,26 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<section>
 				<Title branding>Blog</Title>
 				<Spacing size={4} />
-				{props.posts?.map((post) => (
-					<PostCard
-						key={post.slug}
-						title={post.meta.title}
-						content={post.meta.description}
-						url={post.url}
-						external={post.external}
-						date={new Date(post.meta.date)}
-					/>
-				))}
+				{props.posts?.map((post) => {
+					const metadata = post[props.locale];
+
+					if (!metadata) {
+						return null;
+					}
+
+					return (
+						<PostCard
+							key={metadata.slug}
+							title={metadata.title}
+							content={metadata.description}
+							url={
+								metadata.external ?? `/${props.locale}/blog/${metadata.slug}`
+							}
+							external={metadata.external}
+							date={new Date(metadata.date)}
+						/>
+					);
+				})}
 			</section>
 
 			<Spacing size={6} multiplier={3} />

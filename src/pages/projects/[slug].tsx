@@ -1,76 +1,108 @@
 import { MDXProvider } from '@mdx-js/react';
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import {
+	GetStaticPaths,
+	GetStaticPropsContext,
+	InferGetStaticPropsType
+} from 'next';
 import Head from 'next/head';
+import { useRef } from 'react';
 
 import ContentLayout from 'layouts/contentLayout';
 import { contentComponents } from 'utils/content.utils';
 
 import { generateImage } from 'lib/opengraph';
 
-import { getAllProjects } from 'services/projects';
+import {
+	ContentDirectories,
+	get,
+	getContentMetadata
+} from 'utils/services.utils';
+
+import { ProjectMetaFile } from 'src/types/Project';
+import { MDXContent } from 'mdx/types';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const projects = await getAllProjects();
+	const projects = await getContentMetadata<ProjectMetaFile>(
+		ContentDirectories.Projects
+	);
 
 	if (process.env.GENERATE_IMAGES) {
-		projects.forEach((project) => {
-			try {
-				generateImage(
-					project.slug,
-					project.meta.title,
-					undefined,
-					project.language,
-					`/public/images/content/projects/${project.slug}`
-				);
-			} catch {
-				console.log(`OG Image not generated: ${project.slug}`);
-			}
-		});
+		projects.forEach((project) =>
+			Object.keys(project).forEach((language) => {
+				const metadata = project[language];
+				try {
+					generateImage(
+						metadata.title,
+						undefined,
+						language,
+						`/public/images/content/projects/${metadata.slug}`
+					);
+				} catch {
+					console.log(`OG Image not generated: ${metadata.slug}`);
+				}
+			})
+		);
 	}
 
+	const paths = projects.flatMap((project) =>
+		Object.keys(project).map((language) => ({
+			params: {
+				slug: project[language].slug
+			},
+			locale: language
+		}))
+	);
+
 	return {
-		paths: projects.map((project) => {
-			return {
-				params: {
-					slug: project.slug
-				},
-				locale: project.language
-			};
-		}),
+		paths,
 		fallback: false
 	};
 };
 
-export const getStaticProps: GetStaticProps = ({ locale, params }) => {
-	const meta =
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		require(`../../content/projects/${locale}/${params?.slug}.mdx`).meta;
+export const getStaticProps = async ({
+	locale,
+	params
+}: GetStaticPropsContext) => {
+	const { meta } = await get<ProjectMetaFile>(ContentDirectories.Projects, {
+		slug: (params?.slug as string) ?? ''
+	});
 
 	return {
 		props: {
 			meta,
-			locale,
-			slug: params?.slug ?? ''
+			slug: params?.slug ?? '',
+			locale
 		}
 	};
 };
 
-const Project = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const ContentComponent =
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		require(`../../content/projects/${props.locale}/${props.slug}.mdx`).default;
+const Project = ({
+	meta,
+	locale,
+	slug
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+	const ContentComponent = useRef<MDXContent>();
+	const metadata = meta[locale ?? ''];
+
+	try {
+		ContentComponent.current =
+			// eslint-disable-next-line @typescript-eslint/no-var-requires
+			require(`../../content/projects/${slug}/${locale}.mdx`).default;
+	} catch {
+		return <></>;
+	}
 
 	return (
 		<MDXProvider components={contentComponents}>
 			<Head>
 				<meta
 					property="og:image"
-					content={`/images/content/projects/${props.slug}/og_${props.locale}.png`}
+					content={`/images/content/projects/${slug}/og_${locale}.png`}
 				/>
 				<meta property="og:image:type" content="image/png" />
 			</Head>
-			<ContentLayout meta={props.meta}>
-				<ContentComponent />
+			<ContentLayout meta={metadata}>
+				<>{ContentComponent.current ? <ContentComponent.current /> : null}</>
 			</ContentLayout>
 		</MDXProvider>
 	);
