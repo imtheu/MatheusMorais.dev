@@ -32,13 +32,11 @@ const PostCard = ({ title, content, url, external, date }: PropsType) => {
 
 	return (
 		<article>
-			<Link href={url} passHref>
-				<a>
-					<Title tag="h1" size={4}>
-						{title}
-					</Title>
-				</a>
-			</Link>
+			<Title tag="h1" size={4}>
+				<Link href={url} passHref>
+					<a>{title}</a>
+				</Link>
+			</Title>
 			<Text size={1} color="rockBlue">
 				{external ? cardContent[locale].externalText : null}
 				{date.toLocaleDateString(locale, {

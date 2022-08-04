@@ -10,7 +10,8 @@ export const DEFAULT_LANGUAGE = Languages.EN_US;
 
 export const enum ContentDirectories {
 	Posts = 'src/content/posts',
-	Projects = 'src/content/projects'
+	Projects = 'src/content/projects',
+	Drops = 'src/content/drops'
 }
 
 export const getContentMetadata = <MetaFileType>(

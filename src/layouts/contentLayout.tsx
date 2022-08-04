@@ -1,6 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import Link from 'next/link';
 
 import Comments from 'components/comments';
 import Notification from 'components/notification';
@@ -13,6 +15,7 @@ import * as Styled from './style';
 
 import { ProjectMetaType } from 'src/types/Project';
 import { PostMetaType } from 'src/types/Post';
+import { DropMetaType } from 'src/types/Drop';
 
 const languages = {
 	'en-US': 'English',
@@ -21,7 +24,7 @@ const languages = {
 
 type PropsType = {
 	children: JSX.Element;
-	meta?: ProjectMetaType | PostMetaType;
+	meta?: ProjectMetaType | PostMetaType | DropMetaType;
 	comments?:
 		| {
 				url: string;
@@ -32,6 +35,7 @@ type PropsType = {
 		| undefined;
 	locale?: string;
 	locales?: string[];
+	dropId?: number;
 };
 
 const ContentLayout = (props: PropsType) => {
@@ -58,7 +62,15 @@ const ContentLayout = (props: PropsType) => {
 
 				<main>
 					{props.locales && props.locales.length > 1 ? (
-						<Notification>
+						<Notification
+							css={{
+								width: 'fit-content',
+								marginLeft: 'auto',
+								'@phone': {
+									margin: '0 auto'
+								}
+							}}
+						>
 							<>
 								This post is also available in{' '}
 								{props.locales
@@ -76,6 +88,18 @@ const ContentLayout = (props: PropsType) => {
 							</>
 						</Notification>
 					) : null}
+
+					{props.dropId ? (
+						<Link href="/drops" passHref>
+							<a>
+								<Styled.DropsTag>
+									<Image src="/images/drops.svg" width="7px" height="12px" />{' '}
+									Drops #{props.dropId}
+								</Styled.DropsTag>
+							</a>
+						</Link>
+					) : null}
+
 					<Styled.Content>{props.children}</Styled.Content>
 
 					<Spacing size={6} multiplier={3} />

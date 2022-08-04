@@ -1,0 +1,104 @@
+import SocialVideos from 'components/socialVideos';
+
+# Javascript Optional Chaining Operator (?.)
+
+The Optional Chaining Operator (`?.`) is a JavaScript operator that lets you access properties of a object without doing explicit checks
+(using an `if` statement, or a ternary operator (`condition ? expr1 : expr2`), for example) on the existence of the object itself.
+And that's amazing, mainly because it's quite common to have several objects chained together, where some of them may be `null` or `undefined` in some application state.
+
+## The problem
+
+Let's see a very simple example:
+
+Imagine that, in some state of my application, we'll have an object _user_ that will have another chained object called _contact_ that will have some contact properties:
+
+```javascript
+const user = {
+	contact: {
+		phone: '(000) 000-0000'
+	}
+};
+```
+
+But let's assume this contact data is not available in an initial state, so my _user_ object will be empty:
+
+```javascript
+const user = {};
+```
+
+With just what we have here, we can't know what state our application is in. Therefore, we will not be able to know if the _contact_ object exists in the _user_ object.
+So... What happens if we try to access the properties of the _contact_ object in different states?
+
+Well, if the _contact_ object is on _user_ as expected, then it'll work correctly:
+
+```javascript
+const user = {
+	contact: {
+		phone: '(000) 000-0000'
+	}
+};
+
+console.log('Phone:', user.contact.phone);
+
+// ✅ Works!
+```
+
+But if the _contact_ object is not yet in the _user_ object, then:
+
+```javascript
+const user = {};
+
+console.log('Phone:', user.contact.phone);
+
+// ❌ Uncaught TypeError:
+//      Cannot read properties of undefined (reading 'phone')
+```
+
+The _contact_ object hasn't been defined in the _user_ object yet, so we can't access its properties.
+
+## Using the optional chain operator
+
+As already said, there are several ways to solve this, but the optional chaining operator keeps everything very clean and simple:
+
+```javascript
+console.log('Phone:', user.contact?.phone);
+//                           here ^
+```
+
+- If `user.contact` exists, then we will be able to access the `phone` property and display it.
+- If `user.contact` is `null` or `undefined`, then the optional chaining operator will return `undefined` and will not even attempt to access the `phone` property.
+
+### Possibilities
+
+In addition to chained objects, we can use the operator in functions, and even in _arrays_:
+
+- Functions:
+
+  ```javascript
+  const photo = user.viewPhoto?.();
+  ```
+
+  It will only run the _displayPhoto_ function if it isn't `null` or `undefined`. Otherwise, _photo_ will be `undefined`.
+
+- Arrays:
+
+  ```javascript
+  const user = {
+  	contacts: [{ phone: '(000) 000-0000' }, { phone: '(111) 111-1111' }]
+  };
+
+  const firstPhone = user.contacts?.[0]?.phone;
+  ```
+
+  Here we can see two possibilities:
+
+  - In `contacts?.`, we check if the _contacts_ array already exists in the _user_ object, before proceeding to access the rest of the chain (which, in this case, is trying to access the first element of the array).
+  - If `contacts?.` returned the array (instead of `undefined`), as expected, then we go ahead and check if the first element exists: `[0]?.`.
+  - If we have gone through both optional chaining operators, then we are able to access the _phone_ property.
+    If not, we'll have `undefined` as the value of the constant _firstPhone_.
+
+## TL;DR:
+
+(Portuguese only) You can see a summary of this post on Reels at [my tiktok account](https://www.tiktok.com/@matheusmorais.dev) or [my instagram account](https://www.instagram.com/matheusmorais.dev/):
+
+<SocialVideos tiktokId="7127818762664873221" instagramId="Cg0jIxjFVxH" />

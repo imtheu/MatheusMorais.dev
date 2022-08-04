@@ -1,0 +1,105 @@
+import SocialVideos from 'components/socialVideos';
+
+# Operador de Encadeamento Opcional (?.) (Optional Chaining) em Javascript
+
+O Operador de Encadeamento Opcional (`?.`), ou _Optional Chaining_, é um operador do Javascript que permite acessar propriedades de um determinado objeto sem fazer grandes verificações explícitas
+(usando um `if`, ou um operador condicional ternário (`condicao ? expr1 : expr2`), por exemplo) sobre a existência do próprio objeto.
+E isso é incrível principalmente porque é bem comum termos diversos objetos encadeados, onde alguns deles podem ser `null` ou `undefined` em algum estado de certa aplicação.
+
+## Problema inicial
+
+Para ficar mais claro, vamos ver um exemplo bem simples:
+
+Considere que, em algum estado da minha aplicação, teremos um objeto _usuario_ que terá outro objeto encadeado chamado _contato_ e que esse terá algumas propriedades de contato, como telefone, por exemplo:
+
+```javascript
+const usuario = {
+	contato: {
+		telefone: '9999-9999'
+	}
+};
+```
+
+Mas vamos supor que esses dados de contato não estejam disponíveis em um estado inicial, então meu objeto _usuario_ estará vazio:
+
+```javascript
+const usuario = {};
+```
+
+Apenas com o que temos acima, não podemos saber em qual estado nossa aplicação está. Logo, não conseguiremos saber se o objeto _contato_ existe no objeto _usuario_.
+O que acontece se tentarmos acessar as propriedades desse objeto em diferentes estados então?
+
+Bem, se o objeto _contato_ está no _usuario_ como o esperado, então funcionará corretamente:
+
+```javascript
+const usuario = {
+	contato: {
+		telefone: '9999-9999'
+	}
+};
+
+console.log('Telefone:', usuario.contato.telefone);
+
+// ✅ Funciona
+```
+
+Mas se o objeto _contato_ ainda não está no _usuario_, a história muda:
+
+```javascript
+const usuario = {};
+
+console.log('Telefone:', usuario.contato.telefone);
+
+// ❌ Uncaught TypeError:
+//      Cannot read properties of undefined (reading 'telefone')
+```
+
+O objeto _contato_ ainda não foi definido (`undefined`) no objeto _usuario_, logo não podemos acessar suas propriedades.
+
+## Utilizando o operador de encadeamento opcional
+
+Como já dito, há diversas formas de resolver isso, mas o operador de encadeamento opcional deixa tudo bem limpo e simples:
+
+```javascript
+console.log('Telefone:', usuario.contato?.telefone);
+//                                 here ^
+```
+
+- Se o `usuario.contato` existe, então conseguiremos acessar a propriedade `telefone` normalmente e exibir o dado.
+- Já se o `usuario.contato` for `null` ou `undefined`, então o operador de encadeamento opcional retornará `undefined` e nem tentará acessar a propriedade `telefone`.
+
+### Possibilidades
+
+Além de objetos encadeados, podemos usar o operador em funções, e até mesmo _arrays_:
+
+- Funções:
+
+  ```javascript
+  const foto = usuario.exibirFoto?.();
+  ```
+
+  Só executará a função _exibirFoto_ caso ela não seja `null` ou `undefined`. Caso contrário, _foto_ será `undefined`.
+
+- Arrays:
+
+  ```javascript
+  const usuario = {
+  	contatos: [{ telefone: '9999-9999' }, { telefone: '8888-8888' }]
+  };
+
+  const primeiroTelefone = usuario.contatos?.[0]?.telefone;
+  ```
+
+  Aqui podemos ver duas possibilidades:
+
+  - Em `contatos?.`, verificamos se o array _contatos_ já existe no objeto _usuario_, antes de prosseguirmos acessando o resto da cadeia
+    (que nesse caso é tentar acessar o primeiro elemento do array).
+  - Se `contatos?.` nos retornou o array (ao invés de `undefined`), como esperado, então prosseguimos e verificamos se o primeiro elemento existe: `[0]?.`.
+  - Caso tenhamos passado por ambos os operadores de encadeamento opcional, então conseguimos acessar a propriedade _telefone_ normalmente.
+    Caso não, teremos `undefined` como valor da constante _primeiroTelefone_.
+
+## TL;DR:
+
+Você pode ver uma versão resumida desse post no Reels na [minha conta do tiktok](https://www.tiktok.com/@matheusmorais.dev) ou na [minha conta do instagram](https://www.instagram.com/matheusmorais.dev/):
+
+<SocialVideos tiktokId="7127818762664873221" instagramId="Cg0jIxjFVxH" />

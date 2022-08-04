@@ -67,7 +67,7 @@ export const Content = styled('div', {
 		}
 	},
 
-	blockquote: {
+	'blockquote:not(.instagram-media):not(.tiktok-embed)': {
 		borderLeft: '4px solid $light',
 		padding: '10px 25px',
 		backgroundColor: '$lighter',
@@ -80,4 +80,17 @@ export const Content = styled('div', {
 		height: '1px',
 		border: 0
 	}
+});
+
+export const DropsTag = styled('div', {
+	fontSize: '$size1',
+	background: '$primary',
+	color: '$white',
+	padding: '6px 8px',
+	borderRadius: '4px',
+	margin: '0',
+	display: 'flex',
+	width: 'fit-content',
+	gap: '4px',
+	justifyContent: 'center'
 });

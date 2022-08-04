@@ -46,13 +46,11 @@ const ProjectCard = ({ imageSrc, title, content, url }: PropsType) => {
 				<Grid.Item size={6} tabletSize={12} mobileSize={12}>
 					<Spacing tabletSize={4} mobileSize={4} />
 					<Styled.CardContent>
-						<Link href={url} passHref>
-							<a>
-								<Title tag="h1" size={4}>
-									{title}
-								</Title>
-							</a>
-						</Link>
+						<Title tag="h1" size={4}>
+							<Link href={url} passHref>
+								<a>{title}</a>
+							</Link>
+						</Title>
 						<Spacing size={4} />
 						<Text size={2} align="justify">
 							{content}

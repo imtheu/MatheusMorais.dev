@@ -2,13 +2,16 @@ import AOS from 'aos';
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import React, { useEffect } from 'react';
+import Link from 'next/link';
 
 import Spacing from 'components/spacing';
 import Title from 'components/title';
+import Text from 'components/text';
 import PostCard from 'components/postCard';
 import About from 'components/home/about';
 import PresentationCode from 'components/home/presentationCode';
 import ProjectCard from 'components/projectCard';
+import DropCard from 'components/dropCard';
 
 import DefaultLayout from 'layouts/default';
 
@@ -21,13 +24,18 @@ import {
 
 import { PostMetaFile } from 'src/types/Post';
 import { ProjectMetaFile } from 'src/types/Project';
+import { DropMetaFile } from 'src/types/Drop';
 
 const content: { [key: string]: Record<string, string> } = {
 	'en-US': {
-		projects: 'Projects'
+		projects: 'Projects',
+		dropsDescription:
+			"Drops are quick tips, or things I've learned recently that I'd like to share."
 	},
 	'pt-BR': {
-		projects: 'Projetos'
+		projects: 'Projetos',
+		dropsDescription:
+			'Drops são dicas rapidinhas, ou coisas que aprendi recentemente e gostaria de compartilhar.'
 	}
 };
 
@@ -42,10 +50,15 @@ export const getStaticProps = async ({
 		ContentDirectories.Projects
 	);
 
+	const drops = await getContentMetadata<DropMetaFile>(
+		ContentDirectories.Drops
+	);
+
 	return {
 		props: {
 			projects,
 			posts,
+			drops: drops.sort((a, b) => (a['en-US'].id < b['en-US'].id ? 1 : -1)),
 			locale: (locale as Languages) ?? ''
 		}
 	};
@@ -96,7 +109,36 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<Spacing size={6} multiplier={3} />
 
 			<section>
-				<Title branding>Blog</Title>
+				<Title branding>
+					<Link href="/drops" passHref>
+						<a>Drops</a>
+					</Link>
+				</Title>
+				<Text size={1} color="rockBlue">
+					{content[props.locale].dropsDescription}
+				</Text>
+				<Spacing size={4} />
+				{props.drops?.map((drop) => {
+					const metadata = drop[props.locale];
+
+					if (!metadata) {
+						return null;
+					}
+
+					return (
+						<DropCard key={metadata.slug} {...metadata} locale={props.locale} />
+					);
+				})}
+			</section>
+
+			<Spacing size={6} multiplier={3} />
+
+			<section>
+				<Title branding>
+					<Link href="blog" passHref>
+						<a>Blog</a>
+					</Link>
+				</Title>
 				<Spacing size={4} />
 				{props.posts?.map((post) => {
 					const metadata = post[props.locale];
