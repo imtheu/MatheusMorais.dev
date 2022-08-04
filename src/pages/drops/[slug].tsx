@@ -22,20 +22,20 @@ import { MDXContent } from 'mdx/types';
 import { DropMetaFile } from 'src/types/Drop';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const posts = await getContentMetadata<DropMetaFile>(
-		ContentDirectories.Posts
+	const drops = await getContentMetadata<DropMetaFile>(
+		ContentDirectories.Drops
 	);
 
 	if (process.env.GENERATE_IMAGES) {
-		posts.forEach((post) =>
-			Object.keys(post).forEach((language) => {
-				const metadata = post[language];
+		drops.forEach((drop) =>
+			Object.keys(drop).forEach((language) => {
+				const metadata = drop[language];
 				try {
 					generateImage(
 						metadata.title,
 						metadata.date,
 						language,
-						`/public/images/content/posts/${metadata.slug}`
+						`/public/images/content/drops/${metadata.slug}`
 					);
 				} catch (e) {
 					console.log(`OG Image not generated: ${metadata.slug}`, e);
@@ -44,10 +44,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		);
 	}
 
-	const paths = posts.flatMap((post) =>
-		Object.keys(post).map((language) => ({
+	const paths = drops.flatMap((drop) =>
+		Object.keys(drop).map((language) => ({
 			params: {
-				slug: post[language].slug
+				slug: drop[language].slug
 			},
 			locale: language
 		}))
@@ -104,7 +104,7 @@ const Drop = ({
 			<Head>
 				<meta
 					property="og:image"
-					content={`/images/content/posts/${slug}/og_${locale}.png`}
+					content={`/images/content/drops/${slug}/og_${locale}.png`}
 				/>
 				<meta property="og:image:type" content="image/png" />
 			</Head>
@@ -112,9 +112,9 @@ const Drop = ({
 				meta={metadata}
 				comments={{
 					title: metadata.title,
-					identifier: `post_${slug}`,
+					identifier: `drops_${slug}`,
 					language: locale?.replace('-', '_') ?? '',
-					url: `https://matheusmorais.dev/blog/${slug}`
+					url: `https://matheusmorais.dev/drops/${slug}`
 				}}
 				locale={locale}
 				locales={Object.keys(meta)}
