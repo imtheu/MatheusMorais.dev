@@ -2,6 +2,7 @@ import AOS from 'aos';
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import React, { useEffect } from 'react';
+import Link from 'next/link';
 
 import Spacing from 'components/spacing';
 import Title from 'components/title';
@@ -57,7 +58,7 @@ export const getStaticProps = async ({
 		props: {
 			projects,
 			posts,
-			drops,
+			drops: drops.sort((a, b) => (a['en-US'].id < b['en-US'].id ? 1 : -1)),
 			locale: (locale as Languages) ?? ''
 		}
 	};
@@ -108,7 +109,11 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<Spacing size={6} multiplier={3} />
 
 			<section>
-				<Title branding>Drops</Title>
+				<Title branding>
+					<Link href="/drops" passHref>
+						<a>Drops</a>
+					</Link>
+				</Title>
 				<Text size={1} color="rockBlue">
 					{content[props.locale].dropsDescription}
 				</Text>
@@ -129,7 +134,11 @@ const Home = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<Spacing size={6} multiplier={3} />
 
 			<section>
-				<Title branding>Blog</Title>
+				<Title branding>
+					<Link href="blog" passHref>
+						<a>Blog</a>
+					</Link>
+				</Title>
 				<Spacing size={4} />
 				{props.posts?.map((post) => {
 					const metadata = post[props.locale];

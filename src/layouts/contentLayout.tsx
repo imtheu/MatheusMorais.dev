@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Comments from 'components/comments';
 import Notification from 'components/notification';
@@ -89,10 +90,14 @@ const ContentLayout = (props: PropsType) => {
 					) : null}
 
 					{props.dropId ? (
-						<Styled.DropsTag>
-							<Image src="/images/drops.svg" width="7px" height="12px" /> Drops
-							#{props.dropId}
-						</Styled.DropsTag>
+						<Link href="/drops" passHref>
+							<a>
+								<Styled.DropsTag>
+									<Image src="/images/drops.svg" width="7px" height="12px" />{' '}
+									Drops #{props.dropId}
+								</Styled.DropsTag>
+							</a>
+						</Link>
 					) : null}
 
 					<Styled.Content>{props.children}</Styled.Content>
